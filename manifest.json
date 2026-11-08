@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -908,6 +908,25 @@
         "pt"
       ],
       "logo": "https://cineagora.club/templates/cineagora/images/favicon.ico"
+    },
+    {
+      "id": "goyabu",
+      "name": "Goyabu",
+      "description": "Anime legendado/dublado • Qualidade encontrada: até 1080p • Áudio: PT-BR.",
+      "version": "0.1.0",
+      "filename": "providers/goyabu.js",
+      "supportedTypes": [
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "supportsExternalPlayer": true
     }
   ]
 }
