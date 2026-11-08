@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -985,6 +985,26 @@
         "hls",
         "m3u8",
         "mp4"
+      ],
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "framextv",
+      "name": "frameXTV",
+      "description": "Filmes e séries (frameXTV) • Áudio original em inglês, 1080p (HLS) • Legendas PT-BR existem na API mas o Nuvio não anexa legendas.",
+      "version": "0.1.0",
+      "filename": "providers/framextv.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "en"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
       ],
       "supportsExternalPlayer": true
     }
