@@ -55,6 +55,30 @@ function dbgStream(code) {
   return { name: 'MegaFlix', title: code, url: 'https://example.com/debug.mp4', quality: code, headers: {} };
 }
 
+// Marcadores do HTML do frame (diagnóstico v3): o que tem dentro da página
+// do player, sem precisar ver o HTML inteiro. T=Turnstile (2 dígitos: turnstile,
+// challenges.cloudflare), V=<video>, I=nº de iframes, J=lib de player,
+// A=/api ou __siteplay, B=atob/base64, S=sources/file:, IF1=domínio do 1º iframe.
+function frameMarkers(html) {
+  const h = String(html || '');
+  const low = h.toLowerCase();
+  const has = (s) => (low.indexOf(s) !== -1 ? '1' : '0');
+  const iframes = (low.match(/<iframe/g) || []).length;
+  const m = h.match(/<iframe[^>]+src=["']([^"']+)["']/i);
+  let if1 = 'none';
+  if (m && m[1]) {
+    try { if1 = new URL(m[1], 'https://warezcdn.sbs/').hostname.replace(/^www\./, ''); } catch (e) { if1 = 'bad'; }
+  }
+  return 'T' + has('turnstile') + has('challenges.cloudflare.com')
+    + '-V' + has('<video')
+    + '-I' + Math.min(iframes, 9)
+    + '-J' + (/(jwplayer|video\.js|clappr|plyr|hls\.js|dash\.js)/.test(low) ? '1' : '0')
+    + '-A' + ((low.indexOf('/api') !== -1 || low.indexOf('__siteplay') !== -1) ? '1' : '0')
+    + '-B' + ((low.indexOf('atob') !== -1 || low.indexOf('base64') !== -1) ? '1' : '0')
+    + '-S' + ((low.indexOf('sources') !== -1 || low.indexOf('file:') !== -1) ? '1' : '0')
+    + '-IF1-' + if1;
+}
+
 function normalize(text) {
   let t = String(text || '');
   try {
@@ -349,7 +373,7 @@ async function resolveSource(sourceUrl, referer, jar) {
       'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
     },
   }, jar || '', FRAME_TIMEOUT_MS);
-  if (!first.res || !first.res.ok || !first.text) return { videos: [], status: first.res ? first.res.status : 0, htmlLen: (first.text || '').length };
+  if (!first.res || !first.res.ok || !first.text) return { videos: [], status: first.res ? first.res.status : 0, htmlLen: (first.text || '').length, markers: frameMarkers(first.text || '') };
   let videos = extractVideoUrls(first.text, clean);
   if (videos.length) return { videos, status: first.res.status, htmlLen: first.text.length };
   const nested = extractFirstIframeSrc(first.text, clean);
@@ -365,11 +389,11 @@ async function resolveSource(sourceUrl, referer, jar) {
       videos = extractVideoUrls(second.text, nested);
       if (videos.length) return { videos, status: second.res.status, htmlLen: second.text.length };
     }
-    return { videos: [], status: second.res ? second.res.status : 0, htmlLen: (second.text || '').length };
+    return { videos: [], status: second.res ? second.res.status : 0, htmlLen: (second.text || '').length, markers: frameMarkers(first.text || '') };
   } else if (nested && isDirectVideo(nested)) {
     return { videos: [nested], status: 200, htmlLen: 0 };
   }
-  return { videos: [], status: first.res ? first.res.status : 0, htmlLen: (first.text || '').length };
+  return { videos: [], status: first.res ? first.res.status : 0, htmlLen: (first.text || '').length, markers: frameMarkers(first.text || '') };
 }
 
 function qualityFromLabel(text) {
@@ -483,7 +507,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
       try {
         const r = await resolveSource(rawUrl, contentUrl, jar);
         const videos = r.videos || [];
-        if (!videos.length) frameNotes.push('DBG-FRAME-' + (r.status || 0) + '-' + (r.htmlLen || 0) + 'B');
+        if (!videos.length) frameNotes.push('DBG-FRAME-' + (r.status || 0) + '-' + (r.htmlLen || 0) + 'B-' + (r.markers || 'NOMARK'));
         for (const videoUrl of videos) {
           if (seen.has(videoUrl)) continue;
           seen.add(videoUrl);
