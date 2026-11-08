@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -944,6 +944,26 @@
       ],
       "formats": [
         "mp4"
+      ],
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "pobreflixtvfree",
+      "name": "PobreFlixTVFree",
+      "description": "Filmes e séries (PobreFlixTVFree) • Dublado e legendado (HLS) • Qualidade encontrada: 480p.",
+      "version": "0.1.0",
+      "filename": "providers/pobreflixtvfree.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
       ],
       "supportsExternalPlayer": true
     }
