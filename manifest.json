@@ -1,0 +1,913 @@
+{
+  "name": "Ivadz Nuvio Repo",
+  "version": "1.1.0",
+  "scrapers": [
+    {
+      "id": "fshd",
+      "name": "FSHD",
+      "description": "FSHD - API | 1080p",
+      "version": "1.0.0",
+      "author": "saimuel",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/fshd.js",
+      "enabled": true,
+      "formats": [
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "pt"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "filmes",
+        "séries"
+      ]
+    },
+    {
+      "id": "megaembed",
+      "name": "MegaEmbed",
+      "description": "MegaEmbed - API| 1080p/720p",
+      "version": "1.0.0",
+      "author": "saimuel",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/megaembed.js",
+      "enabled": true,
+      "formats": [
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "pt"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "filmes",
+        "séries"
+      ]
+    },
+    {
+      "id": "peachify",
+      "name": "Peachify",
+      "description": "Peachify - API | 1080p",
+      "version": "1.0.0",
+      "author": "saimuel",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/peachify.js",
+      "enabled": true,
+      "formats": [
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "pt"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "filmes",
+        "séries"
+      ]
+    },
+    {
+      "id": "redeflix",
+      "name": "RedeFlix",
+      "description": "RedeFlix - API | 1080p",
+      "version": "1.0.0",
+      "author": "saimuel",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/redeflix.js",
+      "enabled": true,
+      "formats": [
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "pt"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "filmes",
+        "séries"
+      ]
+    },
+    {
+      "id": "pomfy",
+      "name": "Pomfy",
+      "description": "Filmes e séries em 1080p via Pomfy API",
+      "version": "1.0.0",
+      "author": "lawlietbr, saimuelbr",
+      "supportedTypes": [
+        "tv",
+        "movie"
+      ],
+      "filename": "providers/pomfy.js",
+      "enabled": true,
+      "logo": "https://pomfy.online/pomfylogofullcolor.png",
+      "contentLanguage": [
+        "pt-br"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "filmes",
+        "séries"
+      ]
+    },
+    {
+      "id": "mywallpaper",
+      "name": "My Wallpaper",
+      "description": "CDN brasileiro de animes",
+      "version": "2.0.0",
+      "author": "lawlietbr",
+      "supportedTypes": [
+        "tv"
+      ],
+      "filename": "providers/mywallpaper.js",
+      "enabled": true,
+      "logo": "https://image2url.com/r2/default/images/1773218651086-4a0ea24e-6e2b-4a22-ab18-8cb28d1b6f23.png",
+      "contentLanguage": [
+        "pt-br"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "anime"
+      ]
+    },
+    {
+      "id": "doramogo",
+      "name": "Doramogo",
+      "description": "Diversidade de conteúdos em 1080p",
+      "version": "2.0.0",
+      "author": "lawlietbr",
+      "supportedTypes": [
+        "tv",
+        "movie"
+      ],
+      "filename": "providers/doramogo.js",
+      "enabled": true,
+      "logo": "https://www.doramogo.net/assets/doramogo/images/apple-touch-icon.webp?version=200.50.10",
+      "contentLanguage": [
+        "pt-br"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "dorama",
+        "animes",
+        "series",
+        "filmes",
+        "legendado",
+        "dublado"
+      ]
+    },
+    {
+      "id": "myembed",
+      "name": "MyEmbed",
+      "description": "API de filmes e séries",
+      "version": "1.0.0",
+      "author": "lawlietbr",
+      "supportedTypes": [
+        "tv",
+        "movie"
+      ],
+      "filename": "providers/myembed.js",
+      "enabled": true,
+      "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzFhMWExYSIgcng9IjEwIiByeT0iMTAiIC8+CiAgPHRleHQgeD0iNTAiIHk9IjY1IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5NQjwvdGV4dD4KPC9zdmc+",
+      "contentLanguage": [
+        "pt-br"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
+      ],
+      "limited": false,
+      "disabledPlatforms": [],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "player",
+        "embed"
+      ]
+    },
+    {
+      "id": "berryanimes",
+      "name": "Berry Animes",
+      "description": "Anime (séries) • Qualidade encontrada: até 1080p • Áudio: multiáudio, conforme o episódio.",
+      "version": "0.1.6",
+      "filename": "providers/berryanimes.js",
+      "supportedTypes": [
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja",
+        "en"
+      ],
+      "formats": [
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": false
+    },
+    {
+      "id": "anistream",
+      "name": "AniStream",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: até 1080p • Áudio: múltiplas faixas, conforme o arquivo.",
+      "version": "0.1.6",
+      "filename": "providers/anistream.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mkv",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": false
+    },
+    {
+      "id": "megaembedapi",
+      "name": "MegaEmbedAPI",
+      "description": "Filmes • Qualidades encontradas: 360p e 720p • Áudio: dublado ou original, conforme o filme.",
+      "version": "0.1.5",
+      "filename": "providers/megaembedapi.js",
+      "supportedTypes": [
+        "movie"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "embedmovies",
+      "name": "EmbedMovies",
+      "description": "Filmes e séries, incluindo anime • Qualidade encontrada: até 720p • Áudio: dublado ou legendado.",
+      "version": "0.1.4",
+      "filename": "providers/embedmovies.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "anizone",
+      "name": "AniZone",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: até 1080p • Áudio: multiáudio, conforme o título.",
+      "version": "0.1.5",
+      "filename": "providers/anizone.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "ja",
+        "pt-BR",
+        "en"
+      ],
+      "formats": [
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "anizero",
+      "name": "AniZero",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: até 720p • Áudio: dublado ou legendado.",
+      "version": "0.1.3",
+      "filename": "providers/anizero.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": false
+    },
+    {
+      "id": "amyflix",
+      "name": "AmyFlix",
+      "description": "Séries e filmes asiáticos, incluindo GL • Qualidade encontrada: variável • Áudio: dublado ou legendado, conforme a opção disponível.",
+      "version": "0.1.12",
+      "filename": "providers/amyflix.js",
+      "logo": "https://i.imgur.com/7MjSuHT.png",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "topanimes",
+      "name": "TopAnimes",
+      "description": "Anime (séries) • Qualidade encontrada: variável • Áudio: dublado ou legendado, conforme a opção disponível.",
+      "version": "0.1.13",
+      "filename": "providers/topanimes.js",
+      "logo": "https://i.imgur.com/sfcToMU.png",
+      "supportedTypes": [
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "superanimes",
+      "name": "Super Animes",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.12",
+      "filename": "providers/superanimes.js",
+      "logo": "https://i.imgur.com/XUfXdbk.png",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animefire",
+      "name": "AnimeFire",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.12",
+      "filename": "providers/animefire.js",
+      "logo": "https://i.imgur.com/bIt6zkA.png",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animesonlinecloud",
+      "name": "Animes Online Cloud",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado, conforme o servidor.",
+      "version": "0.1.11",
+      "filename": "providers/animesonlinecloud.js",
+      "logo": "https://i.imgur.com/BjAOlx6.png",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animesonlineblue",
+      "name": "Animes Online Blue",
+      "description": "Anime (séries) • Qualidade encontrada: até 720p • Áudio: dublado ou legendado.",
+      "version": "0.1.0",
+      "filename": "providers/animesonlineblue.js",
+      "supportedTypes": [
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4",
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "yumefree",
+      "name": "YumeFree",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.0",
+      "filename": "providers/yumefree.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "otakulogia",
+      "name": "Otakulogia",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.0",
+      "filename": "providers/otakulogia.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "anibunker",
+      "name": "AniBunker",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.12",
+      "filename": "providers/anibunker.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animeshd",
+      "name": "Animes HD",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.3",
+      "filename": "providers/animeshd.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4",
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animesdrive",
+      "name": "Animes Drive",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
+      "version": "0.1.3",
+      "filename": "providers/animesdrive.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4",
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animy",
+      "name": "Animy",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado, conforme o arquivo.",
+      "version": "0.1.3",
+      "filename": "providers/animy.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4",
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "donghuanosekai",
+      "name": "Donghua no Sekai",
+      "description": "Donghua e anime (séries e filmes) • Qualidade encontrada: variável • Áudio original, geralmente em chinês, com legendas quando disponíveis.",
+      "version": "0.1.12",
+      "filename": "providers/donghuanosekai.js",
+      "logo": "https://i.imgur.com/B4nm4HJ.png",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "zh",
+        "ja"
+      ],
+      "formats": [
+        "hls",
+        "mp4"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "homura",
+      "name": "Homura",
+      "description": "Anime (séries e filmes) • Qualidade encontrada: até 720p • Áudio: dublado ou legendado, conforme a versão.",
+      "version": "0.1.0",
+      "filename": "providers/homura.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4",
+        "hls",
+        "dash"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "tomato",
+      "name": "Tomato",
+      "description": "Anime (séries) • Qualidades encontradas: 480p, 720p e 1080p • Áudio: dublado e legendado, conforme a temporada.",
+      "version": "0.1.1",
+      "filename": "providers/tomato.js",
+      "supportedTypes": [
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "mp4",
+        "hls"
+      ],
+      "hasSettings": true,
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "animezey",
+      "name": "AnimeZeY",
+      "description": "Películas, series y anime en portugués de Brasil.",
+      "version": "1.1.0",
+      "author": "Nuvio Team",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/animezey.js",
+      "enabled": true,
+      "hasSettings": true,
+      "formats": [
+        "mp4",
+        "mkv",
+        "m3u8"
+      ],
+      "logo": "https://i.postimg.cc/RVTy2djk/ainimezey.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "netcine",
+      "name": "NetCine",
+      "description": "Películas, series y anime en portugués de Brasil (doblado y subtitulado) desde NetCine.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/netcine.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "megaflix",
+      "name": "MegaFlix",
+      "description": "Películas y series dobladas al portugués de Brasil desde MegaFlix.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/megaflix.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://i.imgur.com/Y7gXItF.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "pobreflix",
+      "name": "PobreFlix",
+      "description": "Películas, series y anime en portugués de Brasil (doblado y subtitulado) desde PobreFlix.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/pobreflix.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://www.pobreflixtv.club/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "topfilmes",
+      "name": "TopFilmes",
+      "description": "Películas dobladas al portugués de Brasil desde TopFilmes.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie"
+      ],
+      "filename": "providers/topfilmes.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://www.topfilmes.biz/assets/theme/red/favicon/favicon-128.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "overflix",
+      "name": "OverFlix",
+      "description": "Películas y series dobladas al portugués de Brasil desde OverFlix.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/overflix.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://overflix.me/assets/img/android-chrome-192x192.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "ultracine",
+      "name": "UltraCine",
+      "description": "Películas y series dobladas al portugués de Brasil desde UltraCine.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/ultracine.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://ultracine.org/wp-content/uploads/2024/07/cropped-favicon-300x300.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "animescloud",
+      "name": "AnimesCloud",
+      "description": "Anime en portugués de Brasil (doblado y subtitulado) desde AnimesCloud.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/animescloud.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://i.imgur.com/tYNiHZN.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "animesdigital",
+      "name": "AnimesDigital",
+      "description": "Anime y caricaturas en portugués de Brasil (doblado y subtitulado) desde AnimesDigital.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/animesdigital.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://animesdigital.org/wp-content/uploads/2025/03/cropped-logo-e1740827992823-192x192.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "doramasonline",
+      "name": "Doramas Online",
+      "description": "Doramas con subtítulos en portugués desde Doramas Online.",
+      "version": "1.0.0",
+      "author": "saimuelbr",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/doramasonline.js",
+      "enabled": true,
+      "formats": [
+        "mp4",
+        "m3u8"
+      ],
+      "logo": "https://doramasonline.co/wp-content/uploads/2025/07/cropped-doramas2-180x180.png",
+      "contentLanguage": [
+        "pt"
+      ]
+    },
+    {
+      "id": "cineagora",
+      "name": "CineAgora",
+      "description": "Filmes e séries em HLS, dublados ou legendados conforme disponibilidade no CineAgora.",
+      "version": "1.0.0",
+      "author": "nathanael540",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "filename": "providers/cineagora.js",
+      "enabled": true,
+      "formats": [
+        "m3u8"
+      ],
+      "contentLanguage": [
+        "pt"
+      ],
+      "logo": "https://cineagora.club/templates/cineagora/images/favicon.ico"
+    }
+  ]
+}
