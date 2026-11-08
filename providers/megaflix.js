@@ -49,8 +49,10 @@ const FRAME_TIMEOUT_MS = 10000;
 // Versão de DIAGNÓSTICO (temporária): em vez de devolver [], cada falha
 // devolve um pseudo-stream cujo TÍTULO diz onde o fluxo parou. O Davi lê
 // o título no Nuvio e me diz o que apareceu. URL é falsa e não toca.
-function dbgStream(title) {
-  return { name: 'MegaFlix-DBG', title: title, url: 'https://example.com/debug.mp4', quality: 'DBG', headers: {} };
+function dbgStream(code) {
+  // Código curto de uma palavra: o Nuvio parece cortar o título depois da
+  // primeira palavra, então o código inteiro vai em title E em quality.
+  return { name: 'MegaFlix', title: code, url: 'https://example.com/debug.mp4', quality: code, headers: {} };
 }
 
 function normalize(text) {
@@ -435,10 +437,10 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     pool.sort((a, b) => b.score - a.score);
     const best = pool.length ? pool[0] : null;
     if (!best) {
-      const detail = candidates.length
-        ? 'melhor score ' + Math.max.apply(null, candidates.map((c) => c.score))
-        : '0 cards';
-      return [dbgStream('DBG ' + (candidates.length ? 'MATCH' : 'BUSCA') + ': ' + detail + ' p/ "' + target + '"')];
+      const code = candidates.length
+        ? 'DBG-MATCH-' + Math.max.apply(null, candidates.map((c) => c.score))
+        : 'DBG-BUSCA-0';
+      return [dbgStream(code)];
     }
 
     const contentUrl = kind === 'movie'
@@ -455,11 +457,11 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     }, jar);
     jar = page.jar || jar;
     if (!page.res || !page.res.ok || !page.text) {
-      return [dbgStream('DBG PAGINA: HTTP ' + (page.res ? page.res.status : 0) + ' em ' + contentUrl)];
+      return [dbgStream('DBG-PAGINA-' + (page.res ? page.res.status : 0))];
     }
     const handle = extractPlaybackHandle(page.text);
     if (!handle) {
-      return [dbgStream('DBG HANDLE: ausente em ' + contentUrl)];
+      return [dbgStream('DBG-HANDLE-0')];
     }
 
     const { token: csrfToken, jar: jar2 } = await getCsrfToken(contentUrl, jar);
@@ -467,7 +469,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     const startRes = await startPlayback(handle, csrfToken, contentUrl, jar);
     const sources = startRes.sources;
     if (!sources.length) {
-      return [dbgStream('DBG START: HTTP ' + (startRes.status || 0) + ' ' + (startRes.error || ''))];
+      return [dbgStream('DBG-START-' + (startRes.status || 0))];
     }
 
     const streams = [];
@@ -481,7 +483,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
       try {
         const r = await resolveSource(rawUrl, contentUrl, jar);
         const videos = r.videos || [];
-        if (!videos.length) frameNotes.push(label + ': HTTP ' + (r.status || 0) + ', HTML ' + (r.htmlLen || 0) + ' bytes, 0 videos');
+        if (!videos.length) frameNotes.push('DBG-FRAME-' + (r.status || 0) + '-' + (r.htmlLen || 0) + 'B');
         for (const videoUrl of videos) {
           if (seen.has(videoUrl)) continue;
           seen.add(videoUrl);
@@ -501,7 +503,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     }
 
     if (!streams.length) {
-      return frameNotes.map((n) => dbgStream('DBG FRAME: ' + n));
+      return frameNotes.map((n) => dbgStream(n));
     }
 
     // Qualidade real via master .m3u8 (quando ainda não conhecida).
@@ -524,7 +526,8 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     return streams;
   } catch (error) {
     console.error('[MegaFlix] Erro:', error && error.message ? error.message : error);
-    return [dbgStream('DBG ERRO: ' + (error && error.message ? error.message : error))];
+    const emsg = String(error && error.message ? error.message : error).replace(/[^A-Za-z0-9]+/g, '-').slice(0, 20).replace(/^-|-$/g, '');
+    return [dbgStream('DBG-ERRO-' + (emsg || 'X'))];
   }
 }
 

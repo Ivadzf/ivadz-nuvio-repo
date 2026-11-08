@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "scrapers": [
     {
       "id": "fshd",
@@ -725,8 +725,8 @@
     {
       "id": "megaflix",
       "name": "MegaFlix",
-      "description": "VERSÃO DE DIAGNÓSTICO — Filmes e séries • Se não tocar, o título da fonte diz onde parou.",
-      "version": "0.1.1-debug",
+      "description": "VERSÃO DE DIAGNÓSTICO — O título da fonte é um código curto (ex: DBG-START-419).",
+      "version": "0.1.2-debug",
       "supportedTypes": [
         "movie",
         "tv"
