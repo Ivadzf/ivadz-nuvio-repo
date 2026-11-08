@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -924,6 +924,26 @@
         "ja"
       ],
       "formats": [
+        "mp4"
+      ],
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "anitube",
+      "name": "AniTube",
+      "description": "Anime legendado/dublado • Qualidade encontrada: até 1080p (HLS) • Áudio: PT-BR.",
+      "version": "0.1.0",
+      "filename": "providers/anitube.js",
+      "supportedTypes": [
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR",
+        "ja"
+      ],
+      "formats": [
+        "hls",
         "mp4"
       ],
       "supportsExternalPlayer": true
