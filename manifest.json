@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -725,9 +725,8 @@
     {
       "id": "megaflix",
       "name": "MegaFlix",
-      "description": "Películas y series dobladas al portugués de Brasil desde MegaFlix.",
-      "version": "1.0.0",
-      "author": "saimuelbr",
+      "description": "Filmes e séries • Qualidade adaptativa (HLS) • Áudio: PT-BR (dublado/legendado).",
+      "version": "0.1.0",
       "supportedTypes": [
         "movie",
         "tv"
@@ -735,13 +734,13 @@
       "filename": "providers/megaflix.js",
       "enabled": true,
       "formats": [
-        "mp4",
-        "m3u8"
+        "hls",
+        "mp4"
       ],
-      "logo": "https://i.imgur.com/Y7gXItF.png",
       "contentLanguage": [
-        "pt"
-      ]
+        "pt-BR"
+      ],
+      "supportsExternalPlayer": true
     },
     {
       "id": "pobreflix",
