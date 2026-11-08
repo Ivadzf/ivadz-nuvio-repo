@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "scrapers": [
     {
       "id": "fshd",
@@ -721,26 +721,6 @@
       "contentLanguage": [
         "pt"
       ]
-    },
-    {
-      "id": "megaflix",
-      "name": "MegaFlix",
-      "description": "VERSÃO DE DIAGNÓSTICO — O título da fonte é um código com marcadores do HTML do frame.",
-      "version": "0.1.3-debug",
-      "supportedTypes": [
-        "movie",
-        "tv"
-      ],
-      "filename": "providers/megaflix.js",
-      "enabled": true,
-      "formats": [
-        "hls",
-        "mp4"
-      ],
-      "contentLanguage": [
-        "pt-BR"
-      ],
-      "supportsExternalPlayer": true
     },
     {
       "id": "pobreflix",

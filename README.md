@@ -24,7 +24,7 @@ Repositório brasileiro para o Nuvio — fork combinado de vários repos, com 43
 amyflix, anibunker, animefire, animesdrive, animeshd, animesonlineblue, animesonlinecloud, animy, anistream, anizero, anizone, berryanimes, donghuanosekai, embedmovies, homura, megaembedapi, otakulogia, superanimes, tomato, topanimes, yumefree — maioria anime, alguns filmes/séries e doramas.
 
 ### PT-BR — Droydr13/plugin-pt-fr, só os em português (10)
-animezey, netcine, megaflix, pobreflix, topfilmes (só filmes), overflix, ultracine, animescloud, animesdigital, doramasonline.
+animezey, netcine, pobreflix, topfilmes (só filmes), overflix, ultracine, animescloud, animesdigital, doramasonline.
 
 ### PT-BR — nathanael540/nuvio-fontes-ptbr-plugin (1)
 cineagora — filmes e séries em HLS, dublado ou legendado. Precisa da chave do TMDB fornecida pelo app (configure em Settings > Integrations > TMDB Enrichment).
