@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "scrapers": [
     {
       "id": "fshd",
@@ -725,8 +725,8 @@
     {
       "id": "megaflix",
       "name": "MegaFlix",
-      "description": "Filmes e séries • Qualidade adaptativa (HLS) • Áudio: PT-BR (dublado/legendado).",
-      "version": "0.1.0",
+      "description": "VERSÃO DE DIAGNÓSTICO — Filmes e séries • Se não tocar, o título da fonte diz onde parou.",
+      "version": "0.1.1-debug",
       "supportedTypes": [
         "movie",
         "tv"

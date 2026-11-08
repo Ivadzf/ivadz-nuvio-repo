@@ -46,6 +46,13 @@ const TMDB_API_URL = 'https://api.themoviedb.org/3';
 const FETCH_TIMEOUT_MS = 15000;
 const FRAME_TIMEOUT_MS = 10000;
 
+// Versão de DIAGNÓSTICO (temporária): em vez de devolver [], cada falha
+// devolve um pseudo-stream cujo TÍTULO diz onde o fluxo parou. O Davi lê
+// o título no Nuvio e me diz o que apareceu. URL é falsa e não toca.
+function dbgStream(title) {
+  return { name: 'MegaFlix-DBG', title: title, url: 'https://example.com/debug.mp4', quality: 'DBG', headers: {} };
+}
+
 function normalize(text) {
   let t = String(text || '');
   try {
@@ -266,14 +273,14 @@ async function startPlayback(handle, csrfToken, referer, jar) {
   }, jar || '');
   if (!res || !res.ok) {
     console.log('[MegaFlix] /__siteplay/start respondeu HTTP ' + (res ? res.status : 0) + ': ' + String(text || '').slice(0, 120));
-    return { sources: [], jar: newJar };
+    return { sources: [], jar: newJar, status: res ? res.status : 0, error: String(text || '').slice(0, 100) };
   }
   try {
     const data = JSON.parse(text);
     const sources = Array.isArray(data && data.sources) ? data.sources : [];
-    return { sources, jar: newJar };
+    return { sources, jar: newJar, status: res.status, error: '' };
   } catch (e) {
-    return { sources: [], jar: newJar };
+    return { sources: [], jar: newJar, status: res ? res.status : 0, error: 'JSON inválido' };
   }
 }
 
@@ -330,8 +337,8 @@ function extractFirstIframeSrc(html, base) {
 // WarezCDN ou outro host). Segue no máximo um iframe aninhado.
 async function resolveSource(sourceUrl, referer, jar) {
   const clean = cleanVideoUrl(sourceUrl, referer);
-  if (!clean) return [];
-  if (isDirectVideo(clean)) return [clean];
+  if (!clean) return { videos: [], status: 0, htmlLen: 0 };
+  if (isDirectVideo(clean)) return { videos: [clean], status: 200, htmlLen: 0, direct: true };
   const first = await doFetch(clean, {
     headers: {
       'User-Agent': UA,
@@ -340,9 +347,9 @@ async function resolveSource(sourceUrl, referer, jar) {
       'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8',
     },
   }, jar || '', FRAME_TIMEOUT_MS);
-  if (!first.res || !first.res.ok || !first.text) return [];
+  if (!first.res || !first.res.ok || !first.text) return { videos: [], status: first.res ? first.res.status : 0, htmlLen: (first.text || '').length };
   let videos = extractVideoUrls(first.text, clean);
-  if (videos.length) return videos;
+  if (videos.length) return { videos, status: first.res.status, htmlLen: first.text.length };
   const nested = extractFirstIframeSrc(first.text, clean);
   if (nested && nested !== clean && !isDirectVideo(nested)) {
     const second = await doFetch(nested, {
@@ -354,12 +361,13 @@ async function resolveSource(sourceUrl, referer, jar) {
     }, first.jar, FRAME_TIMEOUT_MS);
     if (second.res && second.res.ok && second.text) {
       videos = extractVideoUrls(second.text, nested);
-      if (videos.length) return videos;
+      if (videos.length) return { videos, status: second.res.status, htmlLen: second.text.length };
     }
+    return { videos: [], status: second.res ? second.res.status : 0, htmlLen: (second.text || '').length };
   } else if (nested && isDirectVideo(nested)) {
-    return [nested];
+    return { videos: [nested], status: 200, htmlLen: 0 };
   }
-  return [];
+  return { videos: [], status: first.res ? first.res.status : 0, htmlLen: (first.text || '').length };
 }
 
 function qualityFromLabel(text) {
@@ -427,8 +435,10 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     pool.sort((a, b) => b.score - a.score);
     const best = pool.length ? pool[0] : null;
     if (!best) {
-      console.log('[MegaFlix] Nada encontrado para "' + target + '"');
-      return [];
+      const detail = candidates.length
+        ? 'melhor score ' + Math.max.apply(null, candidates.map((c) => c.score))
+        : '0 cards';
+      return [dbgStream('DBG ' + (candidates.length ? 'MATCH' : 'BUSCA') + ': ' + detail + ' p/ "' + target + '"')];
     }
 
     const contentUrl = kind === 'movie'
@@ -445,32 +455,33 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     }, jar);
     jar = page.jar || jar;
     if (!page.res || !page.res.ok || !page.text) {
-      console.log('[MegaFlix] Página do conteúdo respondeu HTTP ' + (page.res ? page.res.status : 0));
-      return [];
+      return [dbgStream('DBG PAGINA: HTTP ' + (page.res ? page.res.status : 0) + ' em ' + contentUrl)];
     }
     const handle = extractPlaybackHandle(page.text);
     if (!handle) {
-      console.log('[MegaFlix] playbackHandle não encontrado em ' + contentUrl);
-      return [];
+      return [dbgStream('DBG HANDLE: ausente em ' + contentUrl)];
     }
 
     const { token: csrfToken, jar: jar2 } = await getCsrfToken(contentUrl, jar);
     jar = jar2 || jar;
-    const { sources } = await startPlayback(handle, csrfToken, contentUrl, jar);
+    const startRes = await startPlayback(handle, csrfToken, contentUrl, jar);
+    const sources = startRes.sources;
     if (!sources.length) {
-      console.log('[MegaFlix] /__siteplay/start não devolveu fontes para "' + target + '"');
-      return [];
+      return [dbgStream('DBG START: HTTP ' + (startRes.status || 0) + ' ' + (startRes.error || ''))];
     }
 
     const streams = [];
     const seen = new Set();
+    const frameNotes = [];
     for (let i = 0; i < sources.length; i++) {
       const src = sources[i] || {};
       const rawUrl = String(src.url || '').trim();
       if (!rawUrl) continue;
       const label = String(src.label || ('Fonte ' + (i + 1))).trim();
       try {
-        const videos = await resolveSource(rawUrl, contentUrl, jar);
+        const r = await resolveSource(rawUrl, contentUrl, jar);
+        const videos = r.videos || [];
+        if (!videos.length) frameNotes.push(label + ': HTTP ' + (r.status || 0) + ', HTML ' + (r.htmlLen || 0) + ' bytes, 0 videos');
         for (const videoUrl of videos) {
           if (seen.has(videoUrl)) continue;
           seen.add(videoUrl);
@@ -487,6 +498,10 @@ async function getStreams(tmdbId, mediaType, season, episode) {
       } catch (e) {
         console.log('[MegaFlix] Fonte "' + label + '" falhou: ' + (e && e.message ? e.message : e));
       }
+    }
+
+    if (!streams.length) {
+      return frameNotes.map((n) => dbgStream('DBG FRAME: ' + n));
     }
 
     // Qualidade real via master .m3u8 (quando ainda não conhecida).
@@ -509,7 +524,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     return streams;
   } catch (error) {
     console.error('[MegaFlix] Erro:', error && error.message ? error.message : error);
-    return [];
+    return [dbgStream('DBG ERRO: ' + (error && error.message ? error.message : error))];
   }
 }
 
