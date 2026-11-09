@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -1091,6 +1091,44 @@
       "description": "Filmes e séries (PopPlay) • Dublado (MP4).",
       "version": "0.1.0",
       "filename": "providers/popplay.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "fenixflix",
+      "name": "FenixFlix",
+      "description": "Filmes e séries (FenixFlix) • Dublado e Legendado (MP4) • 1080p.",
+      "version": "0.1.0",
+      "filename": "providers/fenixflix.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "zeus",
+      "name": "Zeus",
+      "description": "Filmes e séries (Zeus) • Dublado (MP4).",
+      "version": "0.1.0",
+      "filename": "providers/zeus.js",
       "supportedTypes": [
         "movie",
         "tv"
