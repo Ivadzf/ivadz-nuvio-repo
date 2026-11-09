@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "scrapers": [
     {
       "id": "fshd",
@@ -1050,7 +1050,7 @@
       "id": "redecanais",
       "name": "RedeCanais",
       "description": "Filmes e séries (RedeCanais) • Dublado (MP4) • Via envelope do serverforms.api.",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "filename": "providers/redecanais.js",
       "supportedTypes": [
         "movie",

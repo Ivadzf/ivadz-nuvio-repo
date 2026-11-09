@@ -216,9 +216,19 @@ function extractServerPhp(html) {
 // Busca o envelope no serverforms.api (com Referer = server.php).
 // Antes, busca a própria página server.php para estabelecer a sessão
 // do player (o serverforms.api pode exigir os cookies de sessão).
-// O player envia o header X-RC-Envelope ao pedir o envelope.
+// O player pede o envelope por POST (blob O[258] descompilado):
+//   campos: 3c91e7a4, 7e3a91, rc_delivery=1, rc_release=1.6.1, cache=false
+//   header X-RC-Envelope. Os valores de 3c91e7a4/7e3a91 são tokens
+//   gerados em runtime pelo JS do player (não estão no HTML estático);
+//   aqui tentamos o POST com os campos conhecidos e, se falhar, o GET.
 async function fetchEnvelope(serverPhpUrl, pageUrl) {
   const url = MAIN_URL + '/player3/serverforms.api';
+  // Estabelece a sessão do player antes de pedir o envelope.
+  try {
+    await fetch(serverPhpUrl, { headers: { 'User-Agent': UA, Referer: pageUrl } });
+  } catch (_) {
+    // Ignora: a sessão é best-effort, o envelope pode funcionar sem ela.
+  }
   const headers = {
     'User-Agent': UA,
     Referer: serverPhpUrl,
@@ -228,12 +238,26 @@ async function fetchEnvelope(serverPhpUrl, pageUrl) {
     'Cache-Control': 'no-cache',
     Pragma: 'no-cache',
   };
-  // Estabelece a sessão do player antes de pedir o envelope.
+  // 1) POST como o player faz.
   try {
-    await fetch(serverPhpUrl, { headers: { 'User-Agent': UA, Referer: pageUrl } });
+    const body = new URLSearchParams();
+    body.set('3c91e7a4', '');
+    body.set('7e3a91', '');
+    body.set('rc_delivery', '1');
+    body.set('rc_release', '1.6.1');
+    body.set('cache', 'false');
+    const data = await fetchJson(url, {
+      method: 'POST',
+      headers: Object.assign({}, headers, {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      }),
+      body: body.toString(),
+    });
+    if (data && data.rcEnvelope === 1) return data;
   } catch (_) {
-    // Ignora: a sessão é best-effort, o envelope pode funcionar sem ela.
+    // POST falhou; tenta o GET.
   }
+  // 2) GET (o envelope também já foi visto vindo por GET no navegador).
   const data = await fetchJson(url, { headers });
   return data;
 }
