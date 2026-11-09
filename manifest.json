@@ -1,6 +1,6 @@
 {
  "name": "Ivadz Nuvio Repo",
- "version": "2.11.0",
+ "version": "2.11.1",
  "scrapers": [
   {
    "id": "fshd",
@@ -1263,8 +1263,8 @@
   {
    "id": "overflixdate",
    "name": "OverflixDate",
-   "description": "Filmes e séries (OverflixDate / Byse) • Dublado e legendado (HLS, até 1080p).",
-   "version": "0.1.0",
+   "description": "Filmes e séries (OverflixDate / Byse) • Dublado e legendado (HLS, até 1080p). [DIAG]",
+   "version": "0.1.1",
    "filename": "providers/overflixdate.js",
    "supportedTypes": [
     "movie",

@@ -64,7 +64,13 @@ const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36';
 const TMDB_API_URL = 'https://api.themoviedb.org/3';
 const XRW = { 'X-Requested-With': 'XMLHttpRequest' };
-const POW_TIMEOUT_MS = 20000;
+const POW_TIMEOUT_MS = 8000; // DIAG: timeout curto p/ o PoW falhar rápido e isolar a causa
+const DIAG_URL = 'https://example.com/diag.m3u8'; // DIAG: URL falsa, só p/ o card aparecer no Nuvio
+// DIAG v2.11.1: em vez de voltar [], devolve um card com o código da etapa
+// onde travou (no quality, que o Nuvio mostra). Remover antes da versão final.
+function diagStream(code) {
+  return [{ name: 'OverflixDate', title: code, url: DIAG_URL, quality: code }];
+}
 
 async function fetchText(url, options) {
   const res = await fetch(url, options || {});
@@ -590,17 +596,17 @@ async function resolveByse(code) {
     {},
     { Referer: embedUrl }
   );
-  if (!cap || !cap.pow_nonce || !cap.pow_token) return null;
+  if (!cap || !cap.pow_nonce || !cap.pow_token) throw new Error('NOCAPTCHA');
   const difficulty = parseInt(cap.pow_difficulty, 10) || 16;
   const solution = await powSolve(cap.pow_nonce, difficulty, POW_TIMEOUT_MS);
-  if (solution === null) return null;
+  if (solution === null) throw new Error('POWTIME');
   const ver = await byseJson(
     'POST',
     BYSE_HOST + '/api/videos/' + code + '/embed/captcha/verify',
     { pow_token: cap.pow_token, solution },
     { Referer: embedUrl }
   );
-  if (!ver || ver.status !== 'ok' || !ver.token) return null;
+  if (!ver || ver.status !== 'ok' || !ver.token) throw new Error('NOVERIFY');
   const pb = await byseJson(
     'POST',
     BYSE_HOST + '/api/videos/' + code + '/embed/playback',
@@ -608,13 +614,13 @@ async function resolveByse(code) {
     { Referer: embedUrl, 'X-Captcha-Token': ver.token }
   );
   const p = pb && pb.playback;
-  if (!p || !p.key_parts || !p.payload || !p.iv || p.version === undefined) return null;
+  if (!p || !p.key_parts || !p.payload || !p.iv || p.version === undefined) throw new Error('NOPLAY');
   const n = parseInt(p.version, 10);
-  if (!n || n < 1 || n > 30) return null;
+  if (!n || n < 1 || n > 30) throw new Error('NOKEY');
   const key = new Uint8Array(32);
   const partA = b64urlDecode(p.key_parts[n - 1]);
   const partB = b64urlDecode(p.key_parts[31 - n - 1]);
-  if (partA.length !== 16 || partB.length !== 16) return null;
+  if (partA.length !== 16 || partB.length !== 16) throw new Error('NOKEY');
   key.set(partA, 0);
   key.set(partB, 16);
   const plain = utf8Decode(aesGcmDecrypt(key, b64urlDecode(p.iv), b64urlDecode(p.payload)));
@@ -622,10 +628,10 @@ async function resolveByse(code) {
   try {
     data = JSON.parse(plain);
   } catch (_) {
-    return null;
+    throw new Error('NODECRYPT');
   }
   const src = data && data.sources && data.sources[0];
-  if (!src || !src.url) return null;
+  if (!src || !src.url) throw new Error('NOSRC');
   return { label: src.label || '', quality: src.quality || '', url: src.url, height: src.height || 0 };
 }
 
@@ -685,7 +691,12 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     const s = Number(season) || 1;
     const e = Number(episode) || 1;
 
-    const info = await getTmdbInfo(tmdbId, mediaType);
+    let info;
+    try {
+      info = await getTmdbInfo(tmdbId, mediaType);
+    } catch (_) {
+      return diagStream('NOTMDB');
+    }
 
     let results = await searchSite(info.title);
     let match = matchResult(results, info.title, info.originalTitle, info.year, mediaType);
@@ -693,34 +704,37 @@ async function getStreams(tmdbId, mediaType, season, episode) {
       results = await searchSite(info.originalTitle);
       match = matchResult(results, info.title, info.originalTitle, info.year, mediaType);
     }
-    if (!match) return [];
+    if (!match) return diagStream('NOMATCH');
 
     let videoId = await getVideoId(match.url);
-    if (!videoId) return [];
+    if (!videoId) return diagStream('NOVIDEO');
 
     if (isTv) {
       const epUrl = await getEpisodeUrl(videoId, s, e);
-      if (!epUrl) return [];
+      if (!epUrl) return diagStream('NOEP');
       videoId = await getVideoId(epUrl);
-      if (!videoId) return [];
+      if (!videoId) return diagStream('NOVIDEO');
     }
 
     const pd = await getPlayerData(videoId);
-    if (!pd) return [];
+    if (!pd) return diagStream('NOPLAYER');
     const dub = parseServers(pd.servers_dub);
     const leg = parseServers(pd.servers_leg);
+    if (!dub.byse && !leg.byse) return diagStream('NOBYSE');
 
     const out = [];
+    let firstErr = '';
     for (const [label, servers] of [['Dublado', dub], ['Legendado', leg]]) {
       const code = servers.byse;
       if (!code) continue;
       let src = null;
       try {
         src = await resolveByse(code);
-      } catch (_) {
+      } catch (err) {
         // Um áudio fora do ar (ex.: captcha recusado, vídeo apagado)
         // não pode derrubar o outro áudio.
         src = null;
+        if (!firstErr) firstErr = (err && err.message) || 'ERR';
       }
       if (!src) continue;
       out.push({
@@ -731,10 +745,11 @@ async function getStreams(tmdbId, mediaType, season, episode) {
         headers: { 'User-Agent': UA },
       });
     }
+    if (!out.length) return diagStream(firstErr || 'NOBYSE');
     return out;
   } catch (error) {
     console.error('[OverflixDate] Erro:', error && error.message ? error.message : error);
-    return [];
+    return diagStream('ERR');
   }
 }
 
