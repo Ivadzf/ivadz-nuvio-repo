@@ -1,26 +1,72 @@
+<div align="center">
+
 # Ivadz Nuvio Repo
+## 🇧🇷 Repositório Brasileiro para Nuvio.
 
-Repositório de providers em português para o [Nuvio](https://nuvio.app) — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado.
+<img src="https://img.shields.io/badge/Nuvio-blue?style=for-the-badge&logo=android" alt="Nuvio">
+<img src="https://img.shields.io/badge/Status-Stable-yellow?style=for-the-badge" alt="Stable">
 
-São **47 providers**: 46 em português e 1 em inglês (o frameXTV, áudio original).
+[![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-## Instalação
+**47 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (46 em português + 1 em inglês).
 
-1. Copie a URL do manifest:
+**Deixe uma ⭐ se esse repo te ajudou**
+
+[![Deixe uma Star](https://img.shields.io/badge/⭐_Deixe_uma_Star-FFD700?style=for-the-badge&logo=github&logoColor=black)](https://github.com/Ivadzf/ivadz-nuvio-repo/stargazers)
+<br>
+
+### Sobre o Projeto
+- **Atualmente trabalhando em:** [Ivadz Nuvio Repo](https://github.com/Ivadzf/ivadz-nuvio-repo)
+- **Linguagem:** **JavaScript**
+
+</div>
+
+---
+
+### Linguagens e Ferramentas
+<p align="left">
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript" target="_blank" rel="noreferrer">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40" />
+</a>
+<a href="https://git-scm.com" target="_blank" rel="noreferrer">
+<img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git" width="40" height="40"/>
+</a>
+<a href="https://code.visualstudio.com" target="_blank" rel="noreferrer">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" width="40" height="40"/>
+</a>
+</p>
+
+---
+
+<div align="center">
+
+### Estatísticas
+[![Último Commit](https://img.shields.io/github/last-commit/Ivadzf/ivadz-nuvio-repo?style=for-the-badge&logo=github&color=9C27B0&label=Último%20commit)](https://github.com/Ivadzf/ivadz-nuvio-repo/activity)
+[![Tamanho do Repo](https://img.shields.io/github/repo-size/Ivadzf/ivadz-nuvio-repo?style=for-the-badge&logo=github&color=FF9800&label=Tamanho)](https://github.com/Ivadzf/ivadz-nuvio-repo)
+[![Stars](https://img.shields.io/github/stars/Ivadzf/ivadz-nuvio-repo?style=for-the-badge&color=FFD700&logo=github&label=Stars)](https://github.com/Ivadzf/ivadz-nuvio-repo/stargazers)
+[![Forks](https://img.shields.io/github/forks/Ivadzf/ivadz-nuvio-repo?style=for-the-badge&color=orange&logo=github&label=Forks)](https://github.com/Ivadzf/ivadz-nuvio-repo/network/members)
+[![Licença GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-8A2BE2?style=for-the-badge&logo=opensourceinitiative)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+<br>
+
+### Instalação
+
+**Copie esta URL e cole no Nuvio:**
+
+[![Copiar URL do Repositório](https://img.shields.io/badge/📋_COPIAR_URL-000000?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/Ivadzf/ivadz-nuvio-repo/main/manifest.json)
 
 ```
 https://raw.githubusercontent.com/Ivadzf/ivadz-nuvio-repo/main/manifest.json
 ```
 
-2. No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL e salve.
-3. Atualize a lista e ative os providers que quiser usar.
+No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atualize e ative os providers que quiser usar.
 
-### Requisitos
+> **Requisitos:** só a versão sideloaded do Nuvio aceita plugins — a versão da Play Store não aceita.
+> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou` e `primeflix`.
 
-- **Só a versão sideloaded do Nuvio aceita plugins.** A versão da Play Store não aceita.
-- **Chave do TMDB:** vários providers precisam dela para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada.
+</div>
 
-Os providers que precisam da chave do TMDB são: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou` e `primeflix`. Os demais resolvem direto pelo TMDB id ou pelo próprio site e não precisam dela.
+---
 
 ## Providers (47)
 
@@ -132,14 +178,40 @@ Regras do provider:
 - **Nunca embutir credenciais** (chaves de API, usuários/senhas de painéis, cookies de sessão) no código do provider. Use só a chave do TMDB fornecida pelo app.
 - Só conteúdo em português (dublado ou legendado), salvo exceção aprovada.
 
-## Créditos e licença
+---
+
+# ⚠️ Disclaimer Legal
+
+Este projeto **não promove, hospeda, transmite, armazena ou distribui** qualquer mídia protegida por direitos autorais (filmes, séries, animes etc.).
+
+Os plugins **somente indexam** links públicos de terceiros. Todo conteúdo vem de sites externos, que são os únicos responsáveis legais. Qualquer solicitação DMCA deve ser enviada diretamente ao provedor do conteúdo, e não a este repositório ou desenvolvedor.
+
+Este projeto tem caráter meramente educacional e funciona de forma semelhante a um navegador comum, apenas buscando arquivos de vídeo disponíveis publicamente na internet. O uso é de total responsabilidade do usuário, que deve cumprir as leis locais.
+
+---
+
+# 📜 Licença
+
+[![Licença GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-8A2BE2?style=for-the-badge&logo=opensourceinitiative)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+Licença **GPL-3.0** — código livre para usar, modificar e distribuir. Só mantenha os créditos!
 
 - Base: saimuelbr (MIT) e lawlietbr (GPL-3.0).
 - Kamirama: kaminarizz (sem LICENSE no repo original).
 - plugin-pt-fr: Droydr13 (sem LICENSE no repo original).
 - cineagora: nathanael540 (GPL-3.0).
-- Este repo combinado é distribuído sob **GPL-3.0** (ver `LICENSE`). Mantenha os créditos dos autores originais.
 
-## Aviso legal
+---
 
-Este projeto não hospeda, transmite ou distribui mídia. Os providers apenas buscam links públicos de terceiros. O uso é de responsabilidade do usuário, conforme as leis locais.
+# Relacionados
+
+- [![Nuvio TV](https://img.shields.io/badge/Nuvio_TV-FF6B6B?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NuvioMedia/NuvioTV)
+- [![Nuvio Mobile](https://img.shields.io/badge/Nuvio_Mobile-7289DA?style=for-the-badge&logo=github&logoColor=white)](https://github.com/NuvioMedia/NuvioMobile)
+- [![Nuvio App](https://img.shields.io/badge/Nuvio_App-2196F3?style=for-the-badge&logo=android&logoColor=white)](https://nuvioapp.space/)
+- [![Nuvio Web](https://img.shields.io/badge/Nuvio_Web-4CAF50?style=for-the-badge&logo=readthedocs&logoColor=white)](https://github.com/NuvioMedia/NuvioWeb)
+
+<div align="center">
+
+[![Deixe uma Star](https://img.shields.io/badge/_Deixe_uma_Star_no_Repo-4CAF38?style=for-the-badge&logo=github&logoColor=black)](https://github.com/Ivadzf/ivadz-nuvio-repo/stargazers)
+
+</div>
