@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -1187,6 +1187,26 @@
       "description": "Filmes e séries (CineGratis) • Dublado (HLS).",
       "version": "0.1.0",
       "filename": "providers/cinegratis.js",
+      "supportedTypes": [
+        "movie",
+        "tv"
+      ],
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "hls",
+        "m3u8"
+      ],
+      "supportsExternalPlayer": true
+    },
+    {
+      "id": "visioncine",
+      "name": "VisionCine",
+      "description": "Filmes e séries (VisionCine) • Dublado (HLS).",
+      "version": "0.1.0",
+      "filename": "providers/visioncine.js",
       "supportedTypes": [
         "movie",
         "tv"
