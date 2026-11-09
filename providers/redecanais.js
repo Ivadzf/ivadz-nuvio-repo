@@ -216,12 +216,17 @@ function extractServerPhp(html) {
 // Busca o envelope no serverforms.api (com Referer = server.php).
 // Antes, busca a própria página server.php para estabelecer a sessão
 // do player (o serverforms.api pode exigir os cookies de sessão).
+// O player envia o header X-RC-Envelope ao pedir o envelope.
 async function fetchEnvelope(serverPhpUrl, pageUrl) {
   const url = MAIN_URL + '/player3/serverforms.api';
   const headers = {
     'User-Agent': UA,
     Referer: serverPhpUrl,
     'X-Requested-With': 'RC-Site-Requests',
+    'X-RC-Envelope': '1',
+    Accept: 'application/json, text/html;q=0.1',
+    'Cache-Control': 'no-cache',
+    Pragma: 'no-cache',
   };
   // Estabelece a sessão do player antes de pedir o envelope.
   try {
