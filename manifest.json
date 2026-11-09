@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "scrapers": [
     {
       "id": "fshd",
@@ -725,9 +725,8 @@
     {
       "id": "pobreflix",
       "name": "PobreFlix",
-      "description": "Películas, series y anime en portugués de Brasil (doblado y subtitulado) desde PobreFlix.",
-      "version": "1.0.0",
-      "author": "saimuelbr",
+      "description": "Filmes e séries (PobreFlix) • Dublado e legendado via Streamtape (MP4) • Domínio atual pobreflixtv.golf.",
+      "version": "2.0.0",
       "supportedTypes": [
         "movie",
         "tv"
@@ -738,7 +737,6 @@
         "mp4",
         "m3u8"
       ],
-      "logo": "https://www.pobreflixtv.club/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
       "contentLanguage": [
         "pt"
       ]
