@@ -1,6 +1,6 @@
 # Ivadz Nuvio Repo
 
-Repositório brasileiro para o Nuvio — fork combinado de vários repos, com 45 providers (44 em português + 1 em inglês, o frameXTV, incluído a pedido do Davi).
+Repositório brasileiro para o Nuvio — fork combinado de vários repos, com 45 providers (44 em português + 1 em inglês, o frameXTV).
 
 ## Providers incluídos (45)
 
