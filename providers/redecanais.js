@@ -214,15 +214,22 @@ function extractServerPhp(html) {
 }
 
 // Busca o envelope no serverforms.api (com Referer = server.php).
-async function fetchEnvelope(serverPhpUrl) {
+// Antes, busca a própria página server.php para estabelecer a sessão
+// do player (o serverforms.api pode exigir os cookies de sessão).
+async function fetchEnvelope(serverPhpUrl, pageUrl) {
   const url = MAIN_URL + '/player3/serverforms.api';
-  const data = await fetchJson(url, {
-    headers: {
-      'User-Agent': UA,
-      Referer: serverPhpUrl,
-      'X-Requested-With': 'RC-Site-Requests',
-    },
-  });
+  const headers = {
+    'User-Agent': UA,
+    Referer: serverPhpUrl,
+    'X-Requested-With': 'RC-Site-Requests',
+  };
+  // Estabelece a sessão do player antes de pedir o envelope.
+  try {
+    await fetch(serverPhpUrl, { headers: { 'User-Agent': UA, Referer: pageUrl } });
+  } catch (_) {
+    // Ignora: a sessão é best-effort, o envelope pode funcionar sem ela.
+  }
+  const data = await fetchJson(url, { headers });
   return data;
 }
 
@@ -270,7 +277,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
 
       let envelope;
       try {
-        envelope = await fetchEnvelope(serverPhpUrl);
+        envelope = await fetchEnvelope(serverPhpUrl, pageUrl);
       } catch (_) {
         continue;
       }
