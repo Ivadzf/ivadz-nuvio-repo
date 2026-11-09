@@ -39,12 +39,14 @@ const DIAG_URL =
   'https://vaiquecol.com/cdn/hls/e97fd00d5153c28bf253a89c827a181b/master.txt';
 
 function diag(code, detail) {
+  // O card do Nuvio mostra `name` (grande) + `quality` (pequeno) e
+  // NÃO mostra o `title` — por isso o código vai nos DOIS campos.
   return [
     {
       name: 'VaiQueCol',
       title: code,
       url: DIAG_URL,
-      quality: detail || 'DIAG',
+      quality: code,
       headers: {},
     },
   ];
@@ -185,7 +187,7 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     const msg = (error && error.message ? error.message : String(error))
       .replace(/[^A-Za-z0-9]/g, '')
       .slice(0, 12);
-    return diag('TOPFAIL', msg || 'DIAG');
+    return diag('TOPFAIL' + (msg ? msg : ''), 'DIAG');
   }
 }
 
