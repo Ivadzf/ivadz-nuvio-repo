@@ -623,24 +623,38 @@ function hlsVariants({ playlist, video, page }) {
   if (lines[0] !== "#EXTM3U") throw new Error("Cabe\xE7alho HLS inv\xE1lido");
   const groups = lines.filter((line) => line.startsWith("#EXT-X-MEDIA:")).map((line) => attributes(line.slice(line.indexOf(":") + 1)));
   const variants = /* @__PURE__ */ new Map();
+  let masterFallback = null;
   for (let i = 1; i < lines.length; i++) {
     if (!lines[i].startsWith("#EXT-X-STREAM-INF:")) continue;
     const info = attributes(lines[i].slice(lines[i].indexOf(":") + 1));
     const resolution2 = /^(\d+)x([1-9]\d{2,3})$/.exec(info.RESOLUTION || "");
     if (!resolution2 || Number(resolution2[1]) < 1) throw new Error("Variante HLS sem RESOLUTION v\xE1lida");
     if (!lines[i + 1] || lines[i + 1].startsWith("#")) throw new Error("Variante HLS sem URI");
+    let externalGroup = false;
     for (const type of ["AUDIO", "SUBTITLES", "CLOSED-CAPTIONS", "VIDEO"]) {
       if (!info[type] || info[type] === "NONE") continue;
       const related = groups.filter((group) => group.TYPE === type && group["GROUP-ID"] === info[type]);
       if (!related.length) throw new Error(`Grupo HLS ${type} ausente`);
       if (related.some((group) => group.URI) || type === "SUBTITLES") {
-        throw new Error(`Grupo HLS ${type} externo exige master; variante isolada perderia faixas`);
+        externalGroup = true;
+        break;
       }
+    }
+    if (externalGroup) {
+      // Grupo externo (ex.: faixa de áudio separada): a variante isolada
+      // perderia faixas; devolve a master.txt, que carrega tudo (mesmo
+      // comportamento do cinegratis). Guarda a maior qualidade vista.
+      const quality = Number(resolution2[2]);
+      if (!masterFallback || quality > masterFallback.quality) {
+        masterFallback = { url: mediaUrl(playlist.url), quality };
+      }
+      continue;
     }
     const url = mediaUrl(lines[++i], playlist.url);
     const quality2 = Number(resolution2[2]);
     variants.set(`${url}|${quality2}`, { url, quality: quality2 });
   }
+  if (masterFallback) return [masterFallback];
   if (variants.size) return [...variants.values()];
   const segments = lines.map((line, index) => ({ line, index })).filter(({ line }) => line.startsWith("#EXTINF"));
   if (!segments.length || !lines.some((line) => /^#EXT-X-TARGETDURATION:[1-9]\d*$/.test(line)) || !segments.every(({ line, index }) => /^#EXTINF:\d+(?:\.\d+)?,/.test(line) && lines[index + 1] && !lines[index + 1].startsWith("#"))) {

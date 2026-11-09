@@ -516,6 +516,60 @@ async function resolverStreamtape(url) {
   return enlace(`https:${m[1]}${resto}&stream=1`.replace('https:https:', 'https:'), 'Streamtape', { Referer: 'https://streamtape.com/', 'User-Agent': UA }, '');
 }
 
+function calidadBooon(q) {
+  const s = String(q || '').toUpperCase();
+  if (/1080/.test(s)) return '1080p';
+  if (/720/.test(s)) return '720p';
+  if (/360/.test(s)) return '360p';
+  if (s === 'SD') return '1080p';
+  if (s === 'LD') return '720p';
+  if (s === 'FD') return '360p';
+  return calidadTexto(s);
+}
+
+async function resolverBooonceivu(url, referer) {
+  const sep = url.includes('?') ? '&' : '?';
+  const d = await json(`${url}${sep}mode=to-salvando-seu-ip`, { headers: { Referer: referer || `${origen(url)}/`, 'User-Agent': UA } });
+  if (!d || d.status !== 'success' || !Array.isArray(d.midias)) return [];
+  const cab = { Referer: `${origen(url)}/`, 'User-Agent': UA };
+  const saida = [];
+  for (const m of d.midias) {
+    if (m && /^https?:\/\//.test(m.url || '')) saida.push({ url: m.url, calidad: calidadBooon(m.qualidade) });
+  }
+  const peso = { '1080p': 3, '720p': 2, '360p': 1 };
+  saida.sort((a, b) => (peso[b.calidad] || 0) - (peso[a.calidad] || 0));
+  return saida.map((s) => enlace(s.url, 'Booonceivu', cab, s.calidad)).flat();
+}
+
+async function resolverIncvideo(url, referer) {
+  const r = await pedir(url, { headers: { Referer: referer || `${origen(url)}/` } });
+  if (!r || !r.ok) return [];
+  let html = '';
+  try {
+    html = (await conLimite(r.text(), 10000, '')) || '';
+  } catch (e) {}
+  const m = html.match(/file\s*:\s*["']([^"']+)["']/);
+  if (!m) return [];
+  const galleta = cookies(r);
+  const cab = { Referer: `${origen(url)}/`, 'User-Agent': UA };
+  if (galleta) cab.Cookie = galleta;
+  const urls = m[1].split(',').map((x) => x.replace(/^\[\d+p\]/, '').trim()).filter((x) => /^https?:\/\//.test(x));
+  const saida = [];
+  for (const u of urls) {
+    // redirect manual: o destino é o mp4 real e seguir o redirect baixaria o vídeo inteiro no fetch do Nuvio
+    const r2 = await pedir(u, { headers: cab, redirect: 'manual' });
+    const destino = r2 && r2.headers ? r2.headers.get('location') : '';
+    const final = destino ? absoluta(destino, u) : '';
+    if (final && /^https?:\/\//.test(final)) saida.push({ url: final, calidad: calidadTexto(u) });
+    else if (r2 && r2.ok) saida.push({ url: u, calidad: calidadTexto(u) });
+  }
+  // o cookie só serve para obter o redirect; a URL assinada é autocontida e o cookie na hora de tocar dá 403.
+  // o Referer tem que ser a página do embed final (incvideo1): csst.online ou o episódio dão 403 no filevideo.
+  const embedFinal = (r && r.url) || url;
+  const cabSaida = { Referer: embedFinal, 'User-Agent': UA };
+  return saida.map((s) => enlace(s.url, 'Incvideo', cabSaida, s.calidad)).flat();
+}
+
 async function resolverUqload(url, referer) {
   const embed = /embed-/.test(url) ? url : url.replace(/\.(?:com|co|io|net|ws|to|cx|bz)\/(?!embed-)/, (s) => `${s}embed-`);
   const html = await texto(embed, { headers: { Referer: referer || embed } });
@@ -766,6 +820,7 @@ async function resolverNupload(url) {
 
 const SERVIDORES = [
   [/voe\.sx|voe-unblock|voeunbl|voeun|v-o-e|voe\./i, 'Voe', (u, r) => resolverVoe(u, r)],
+  [/booonceivu/i, 'Booonceivu', (u, r) => resolverBooonceivu(u, r)],
   [/filemoon|moonplayer|kerapoxy|byse|bysezoxexe|bysezejataos|byse[a-z]*|f16px|filemooon|1azayf|smdfs40r/i, 'Filemoon', (u) => resolverByse(u)],
   [/streamwish|swdyu|wishembed|playerwish|strwish|swhoi|wishfast|sfastwish|hlswish|embedwish|awish|dwish|streamhg|hglink|habetar|mwish|kswplayer|swiftplayers|hanerix|cdnwish|flaswish|obeywish|davioad|jodwish|ghbrisk|dhcplay|iplayerhls|cybervynx|dumbalag|wishonly|streamwishplayer|asnwish|nekowish|neko-stream|multimovies|streamhls|vibuxer|hlswish/i, 'StreamWish', (u, r) => resolverStreamwish(u, r)],
   [/vidhide|filelions|ryderjet|dintezuvio|mivalyo|dhtpre|peytonepre|smoothpre|vidhidepre|louishide|lylxan|movearnpre|kinoger|alions|azipcdn|nikaplayer|fviplions|vidhidevip|niikaplayerr|callistanise|dinisglows|vidhideplus|vidhidehub|dingtezuni|minochinos/i, 'VidHide', (u, r) => resolverEmpaquetado(u, 'VidHide', r)],
@@ -775,6 +830,7 @@ const SERVIDORES = [
   [/ok\.ru|odnoklassniki/i, 'OK.ru', (u) => resolverOkru(u)],
   [/mixdrop|mxdrop|mixdroop|m1xdrop|mdbekjwqa|mdfx9dc8n/i, 'Mixdrop', (u, r) => resolverMixdrop(u, r)],
   [/vidmoly/i, 'VidMoly', (u) => resolverVidmoly(u)],
+  [/incvideo|csst\.online/i, 'Incvideo', (u, r) => resolverIncvideo(u, r)],
   [/rpmvid|rpmplay|rpmshare|upns\.|vidstack|cubeembed|uns\.bio|p2pplay|4meplayer|p2pstream|strp2p/i, 'Rpmvid', (u, r) => resolverVidstack(u, r)],
   [/dailymotion|dai\.ly/i, 'Dailymotion', (u) => resolverDailymotion(u)],
   [/pixeldrain/i, 'Pixeldrain', (u) => resolverPixeldrain(u)],
@@ -1160,8 +1216,7 @@ function audioPt(t, porDefecto) {
 }
 
 const FUENTE = 'Doramas Online';
-const SITIO = 'https://doramasonline.co';
-const REPRODUCTOR = 'https://seriesboa.live';
+const SITIO = 'https://doramasonline.net';
 
 function cabecerasSitio(referer) {
   return Object.assign({}, CABECERAS_PT, { Referer: referer || `${SITIO}/` });
@@ -1201,19 +1256,18 @@ function elementos(html, nombre, filtro) {
 }
 
 function resultados(html) {
-  const zona = elementos(html, 'div', (t) => atributo(t, 'id') === 'movies-a')[0];
-  const fuente = zona ? zona.bloque : html;
-  const lista = elementos(fuente, 'ul', (t) => tieneClase(t, 'post-lst'))[0];
-  return elementos(lista ? lista.bloque : fuente, 'li').map(({ bloque }) => {
-    const encabezado = elementos(bloque, 'h2', (t) => tieneClase(t, 'entry-title'))[0];
-    const vinculo = elementos(bloque, 'a', (t) => tieneClase(t, 'lnk-blk'))[0];
-    const anio = elementos(bloque, 'span', (t) => tieneClase(t, 'year'))[0];
-    return {
-      titulo: encabezado ? limpiarHtml(encabezado.bloque) : '',
-      url: vinculo ? absoluta(atributo(vinculo.etiqueta, 'href'), SITIO) : '',
-      anio: anio ? limpiarHtml(anio.bloque).replace(/\D/g, '') : ''
-    };
-  }).filter((r) => r.titulo && /^https?:\/\//.test(r.url));
+  const lista = [];
+  for (const { bloque } of elementos(html, 'article')) {
+    const tituloEl = elementos(bloque, 'div', (t) => tieneClase(t, 'title'))[0];
+    const vinculo = tituloEl ? elementos(tituloEl.bloque, 'a')[0] : null;
+    const metaEl = elementos(bloque, 'div', (t) => tieneClase(t, 'meta'))[0];
+    const anioEl = metaEl ? elementos(metaEl.bloque, 'span', (t) => tieneClase(t, 'year'))[0] : null;
+    const titulo = vinculo ? limpiarHtml(vinculo.bloque) : '';
+    const url = vinculo ? absoluta(atributo(vinculo.etiqueta, 'href'), SITIO) : '';
+    const anio = anioEl ? limpiarHtml(anioEl.bloque).replace(/\D/g, '') : '';
+    if (titulo && /^https?:\/\//.test(url)) lista.push({ titulo, url, anio });
+  }
+  return lista;
 }
 
 function idiomaTitulo(t, porDefecto) {
@@ -1230,7 +1284,7 @@ function elegir(lista, datos, tipo) {
   const titulos = titulosPt(datos);
   let mejor = null;
   for (const r of lista) {
-    if (/\/serie\//.test(r.url) !== (tipo === 'tv')) continue;
+    if (/\/series\//.test(r.url) !== (tipo === 'tv')) continue;
     let nota = Math.max(0, ...titulos.map((t) => parecido(sinIdioma(r.titulo), t)));
     if (r.anio && datos.anio) {
       const diferencia = Math.abs(Number(r.anio) - Number(datos.anio));
@@ -1252,83 +1306,61 @@ async function buscar(datos, tipo) {
   return resto.filter(Boolean).sort((a, b) => b.nota - a.nota)[0] || null;
 }
 
-function marcoReproductor(html, base) {
-  for (const { etiqueta } of elementos(html, 'iframe')) {
-    const src = atributo(etiqueta, 'src') || atributo(etiqueta, 'data-src');
-    if (src.includes('seriesboa.live')) return absoluta(src, base);
-  }
-  return '';
-}
-
 function numeroEntero(valor, porDefecto) {
   const t = String(valor || '').trim();
   return /^-?\d+$/.test(t) ? Number(t) : porDefecto;
 }
 
 function episodios(html) {
-  const temporadas = new Map();
-  for (const { bloque } of elementos(html, 'ul', (t) => tieneClase(t, 'header-navigation'))) {
-    for (const { etiqueta } of elementos(bloque, 'li', (t) => /\sdata-season-id\s*=/i.test(t))) {
-      const id = atributo(etiqueta, 'data-season-id');
-      if (!temporadas.has(id)) temporadas.set(id, numeroEntero(atributo(etiqueta, 'data-season-number'), 1));
-    }
-  }
-  const porTemporada = new Map();
-  for (const item of elementos(html, 'li', (t) => /\sdata-episode-id\s*=/i.test(t) && /\sdata-season-id\s*=/i.test(t))) {
-    const id = atributo(item.etiqueta, 'data-season-id');
-    if (!porTemporada.has(id)) porTemporada.set(id, []);
-    porTemporada.get(id).push(item);
-  }
   const lista = [];
-  const vistos = new Set();
-  for (const [id, temporada] of temporadas) {
-    for (const { etiqueta, bloque } of porTemporada.get(id) || []) {
-      const episodio = atributo(etiqueta, 'data-episode-id');
-      if (!episodio || vistos.has(episodio)) continue;
-      vistos.add(episodio);
-      const vinculo = elementos(bloque, 'a')[0];
+  for (const { bloque } of elementos(html, 'div', (t) => tieneClase(t, 'se-c'))) {
+    const cabEl = elementos(bloque, 'span', (t) => tieneClase(t, 'se-t'))[0];
+    const temporada = cabEl ? numeroEntero(limpiarHtml(cabEl.bloque), 0) : 0;
+    for (const { bloque: li } of elementos(bloque, 'li')) {
+      const numEl = elementos(li, 'div', (t) => tieneClase(t, 'numerando'))[0];
+      const titEl = elementos(li, 'div', (t) => tieneClase(t, 'episodiotitle'))[0];
+      const vinculo = titEl ? elementos(titEl.bloque, 'a')[0] : null;
+      const url = vinculo ? absoluta(atributo(vinculo.etiqueta, 'href'), SITIO) : '';
+      const nums = numEl ? limpiarHtml(numEl.bloque).match(/(\d+)\s*-\s*(\d+)/) : null;
       const nombre = vinculo ? limpiarHtml(vinculo.bloque) : '';
-      lista.push({ id: episodio, temporada, numero: numeroEntero((nombre.match(/\d+/) || [])[0], 1) });
+      const numero = nums ? Number(nums[2]) : numeroEntero((nombre.match(/\d+/) || [])[0], 0);
+      if (url) lista.push({ id: url, temporada: temporada || (nums ? Number(nums[1]) : 1), numero });
     }
   }
   return lista;
 }
 
-function paginaReproductor(dato) {
-  const id = (String(dato || '').replace(/\/+$/, '').match(/(\d+)$/) || [])[1];
-  return id ? `${REPRODUCTOR}/episodio/${id}` : '';
+function desempacotarAviso(url) {
+  if (!/\/(aviso|off)\//i.test(url || '')) return url;
+  const m = String(url).match(/[?&]url=([^&#]+)/i);
+  if (!m) return url;
+  let dec = m[1];
+  try {
+    dec = decodeURIComponent(dec);
+  } catch (e) {}
+  return /^https?:\/\//i.test(dec) ? dec : url;
 }
 
-function normalizarEmbed(url) {
-  if (!/embedplay\.upns|embedplay\.upn\.one/i.test(url)) return url;
-  let id = '';
-  if (url.includes('#')) {
-    const resto = url.slice(url.lastIndexOf('#') + 1);
-    id = (resto.includes('/') ? resto.slice(resto.indexOf('/') + 1) : resto).split(/[&?]/)[0];
-  } else {
-    id = (url.match(/[?&]id=([^&#]+)/) || [])[1] || url.replace(/[?#].*$/, '').replace(/^https?:\/\/[^/]+/i, '').split('/').filter(Boolean).pop() || '';
-  }
-  return /^[\w-]+$/.test(id) ? `${origen(url)}/#${id}` : url;
-}
-
-function reproductores(html, base, porDefecto) {
-  const crudos = [];
-  for (const { etiqueta, bloque } of elementos(html, 'button', (t) => /\sdata-source\s*=/i.test(t))) {
-    const rotulo = [limpiarHtml(bloque), atributo(etiqueta, 'title'), atributo(etiqueta, 'data-lang')].join(' ');
-    crudos.push({ url: atributo(etiqueta, 'data-source'), audio: audioPt(rotulo, porDefecto) });
-  }
-  for (const { bloque } of elementos(html, 'div', (t) => atributo(t, 'id') === 'player' || tieneClase(t, 'play-overlay'))) {
-    for (const { etiqueta } of elementos(bloque, 'iframe')) crudos.push({ url: atributo(etiqueta, 'src') || atributo(etiqueta, 'data-src'), audio: porDefecto });
+function playersDaPagina(html, base, porDefecto) {
+  const opcoes = new Map();
+  for (const { etiqueta, bloque } of elementos(html, 'li', (t) => tieneClase(t, 'dooplay_player_option'))) {
+    const num = atributo(etiqueta, 'data-nume');
+    const rotulo = elementos(bloque, 'span', (t) => tieneClase(t, 'title'))[0];
+    opcoes.set(num, audioPt(rotulo ? limpiarHtml(rotulo.bloque) : '', porDefecto));
   }
   const vistos = new Set();
-  const salida = [];
-  for (const c of crudos) {
-    const url = c.url ? absoluta(c.url, base) : '';
-    if (!/^https?:\/\//i.test(url) || url === base || /playembedapi/i.test(url) || vistos.has(url)) continue;
+  const saida = [];
+  for (const { etiqueta, bloque } of elementos(html, 'div', (t) => /^source-player-\d+$/.test(atributo(t, 'id')))) {
+    const num = (atributo(etiqueta, 'id').match(/(\d+)$/) || [])[1] || '';
+    const marco = elementos(bloque, 'iframe')[0];
+    let url = marco ? absoluta(atributo(marco.etiqueta, 'src') || atributo(marco.etiqueta, 'data-src'), base) : '';
+    if (!url) continue;
+    url = desempacotarAviso(url);
+    if (!/^https?:\/\//i.test(url) || vistos.has(url)) continue;
     vistos.add(url);
-    salida.push({ url, audio: c.audio });
+    saida.push({ url, audio: opcoes.get(num) || porDefecto });
   }
-  return salida;
+  return saida;
 }
 
 async function getStreams(tmdbId, mediaType, season, episode) {
@@ -1341,13 +1373,17 @@ async function getStreams(tmdbId, mediaType, season, episode) {
     const titulo = encabezadoPt(datos, tipo, temporada, episodio);
     const elegido = await buscar(datos, tipo);
     if (!elegido) return [];
-    const marco = marcoReproductor(await texto(elegido.url, { headers: cabecerasSitio() }), elegido.url);
-    if (!marco) return [];
-    const capitulo = tipo === 'tv' ? episodios(await texto(marco, { headers: cabecerasSitio(elegido.url) })).find((e) => e.temporada === temporada && e.numero === episodio) : null;
-    const destino = paginaReproductor(tipo === 'tv' ? capitulo && capitulo.id : marco);
-    if (!destino) return [];
-    const html = await texto(destino, { headers: cabecerasSitio(tipo === 'tv' ? marco : elegido.url) });
-    const lista = reproductores(html, destino, idiomaTitulo(elegido.titulo, AUDIO_LEGENDADO)).map((x) => ({ url: normalizarEmbed(x.url), referer: destino, audio: x.audio }));
+    const audio = idiomaTitulo(elegido.titulo, AUDIO_LEGENDADO);
+    if (tipo === 'movie') {
+      const html = await texto(elegido.url, { headers: cabecerasSitio() });
+      const lista = playersDaPagina(html, elegido.url, audio).map((x) => ({ url: x.url, referer: elegido.url, audio: x.audio }));
+      return await armar(lista, titulo, FUENTE);
+    }
+    const htmlSerie = await texto(elegido.url, { headers: cabecerasSitio() });
+    const capitulo = episodios(htmlSerie).find((e) => e.temporada === temporada && e.numero === episodio);
+    if (!capitulo) return [];
+    const htmlEp = await texto(capitulo.id, { headers: cabecerasSitio(elegido.url) });
+    const lista = playersDaPagina(htmlEp, capitulo.id, audio).map((x) => ({ url: x.url, referer: capitulo.id, audio: x.audio }));
     return await armar(lista, titulo, FUENTE);
   } catch (e) {
     console.log(`[${FUENTE}] ${e.message}`);

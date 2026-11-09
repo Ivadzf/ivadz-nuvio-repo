@@ -1,6 +1,6 @@
 {
  "name": "Ivadz Nuvio Repo",
- "version": "2.11.2",
+ "version": "2.11.3",
  "scrapers": [
   {
    "id": "fshd",
@@ -9,7 +9,6 @@
    "version": "1.0.0",
    "author": "saimuel",
    "supportedTypes": [
-    "movie",
     "tv"
    ],
    "filename": "providers/fshd.js",
@@ -24,7 +23,6 @@
    "disabledPlatforms": [],
    "supportsExternalPlayer": true,
    "tags": [
-    "filmes",
     "séries"
    ]
   },
@@ -861,7 +859,7 @@
     "mp4",
     "m3u8"
    ],
-   "logo": "https://doramasonline.co/wp-content/uploads/2025/07/cropped-doramas2-180x180.png",
+   "logo": "https://doramasonline.net/wp-content/uploads/2021/09/doramasonline.png",
    "contentLanguage": [
     "pt"
    ]

@@ -72,7 +72,7 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 
 ### Filmes e séries
 
-- **FSHD** (`fshd`) — filmes e séries, 1080p.
+- **FSHD** (`fshd`) — séries, 1080p.
 - **MegaEmbed** (`megaembed`) — filmes e séries, 1080p/720p.
 - **Peachify** (`peachify`) — filmes e séries, 1080p.
 - **RedeFlix** (`redeflix`) — filmes e séries, 1080p.
