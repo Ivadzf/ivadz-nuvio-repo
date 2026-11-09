@@ -8,7 +8,7 @@
 
 [![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-**56 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (55 em português + 1 em inglês).
+**57 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (56 em português + 1 em inglês).
 
 **Deixe uma ⭐ se esse repo te ajudou**
 
@@ -62,13 +62,13 @@ https://raw.githubusercontent.com/Ivadzf/ivadz-nuvio-repo/main/manifest.json
 No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atualize e ative os providers que quiser usar.
 
 > **Requisitos:** só a versão sideloaded do Nuvio aceita plugins — a versão da Play Store não aceita.
-> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis` e `visioncine`.
+> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis`, `visioncine` e `vaiquecol`.
 
 </div>
 
 ---
 
-## Providers (56)
+## Providers (57)
 
 ### Filmes e séries
 
@@ -97,6 +97,7 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **Veyra** (`veyra`) — filmes e séries, só dublado (MP4, direto via NixPlay). Não precisa da chave do TMDB.
 - **CineGratis** (`cinegratis`) — filmes e séries, só dublado (HLS, via brstream). Precisa da chave do TMDB.
 - **VisionCine** (`visioncine`) — filmes e séries, só dublado (HLS, via brstream). Precisa da chave do TMDB.
+- **VaiQueCol** (`vaiquecol`) — filmes e séries, só dublado (HLS, 480p, via PlenoFlu). Precisa da chave do TMDB (só para filmes).
 - **EmbedMovies** (`embedmovies`) — filmes e séries, incluindo anime.
 - **MegaEmbedAPI** (`megaembedapi`) — só filmes, dublado, 360p/720p.
 - **frameXTV** (`framextv`) — filmes e séries, **áudio original em inglês**, 1080p. Não precisa da chave do TMDB. É o único provider em inglês do repo; a API devolve legendas em PT-BR, mas o formato do Nuvio não anexa legendas, então no app toca em inglês sem legenda.
