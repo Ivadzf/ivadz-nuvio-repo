@@ -8,7 +8,7 @@
 
 [![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-**53 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (52 em português + 1 em inglês).
+**55 providers** — filmes, séries, animes, doramas, novelas e tokusatsu, com áudio dublado e legendado (54 em português + 1 em inglês).
 
 **Deixe uma ⭐ se esse repo te ajudou**
 
@@ -62,13 +62,13 @@ https://raw.githubusercontent.com/Ivadzf/ivadz-nuvio-repo/main/manifest.json
 No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atualize e ative os providers que quiser usar.
 
 > **Requisitos:** só a versão sideloaded do Nuvio aceita plugins — a versão da Play Store não aceita.
-> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis`, `visioncine`, `vaiquecol`, `zeusoficial`, `oxeanimes`, `brflix` e `animesfhd`.
+> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis`, `visioncine`, `vaiquecol`, `zeusoficial`, `oxeanimes`, `brflix`, `animesfhd`, `noveflix` e `cplayapp`.
 
 </div>
 
 ---
 
-## Providers (53)
+## Providers (55)
 
 ### Filmes e séries
 
@@ -131,6 +131,11 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **Doramas Online** (`doramasonline`) — doramas com legendas em português.
 - **SeuDorama** (`seudorama`) — doramas legendados (MP4, 720p/360p). Não precisa da chave do TMDB.
 - **AmyFlix** (`amyflix`) — séries e filmes asiáticos, incluindo GL.
+- **CPlayApp** (`cplayapp`) — séries turcas legendadas e micro-dramas verticais dublados (MP4, 360p/720p). Precisa da chave do TMDB.
+
+### Novelas
+
+- **NoveFlix** (`noveflix`) — novelas brasileiras e dubladas (MP4, 480p). Precisa da chave do TMDB.
 
 ## O que ficou de fora — e por quê
 

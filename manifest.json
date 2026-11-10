@@ -1,6 +1,6 @@
 {
   "name": "Ivadz Nuvio Repo",
-  "version": "2.15.0",
+  "version": "2.16.0",
   "scrapers": [
     {
       "id": "fshd",
@@ -1129,6 +1129,51 @@
         "mp4"
       ],
       "supportsExternalPlayer": true
+    },
+    {
+      "id": "noveflix",
+      "name": "NoveFlix",
+      "description": "Novelas brasileiras e dubladas (NoveFlix) • MP4 • 480p.",
+      "version": "1.0.0",
+      "author": "Ivadz",
+      "supportedTypes": [
+        "tv"
+      ],
+      "filename": "providers/noveflix.js",
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "novelas"
+      ]
+    },
+    {
+      "id": "cplayapp",
+      "name": "CPlayApp",
+      "description": "Séries turcas legendadas e micro-dramas dublados (CPlayApp) • MP4 • 360p/720p.",
+      "version": "1.0.0",
+      "author": "Ivadz",
+      "supportedTypes": [
+        "tv"
+      ],
+      "filename": "providers/cplayapp.js",
+      "enabled": true,
+      "contentLanguage": [
+        "pt-BR"
+      ],
+      "formats": [
+        "mp4"
+      ],
+      "supportsExternalPlayer": true,
+      "tags": [
+        "séries turcas",
+        "micro-dramas"
+      ]
     }
   ]
 }
