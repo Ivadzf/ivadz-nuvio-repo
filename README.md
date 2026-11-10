@@ -8,7 +8,7 @@
 
 [![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-**51 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (50 em português + 1 em inglês).
+**52 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (51 em português + 1 em inglês).
 
 **Deixe uma ⭐ se esse repo te ajudou**
 
@@ -62,13 +62,13 @@ https://raw.githubusercontent.com/Ivadzf/ivadz-nuvio-repo/main/manifest.json
 No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atualize e ative os providers que quiser usar.
 
 > **Requisitos:** só a versão sideloaded do Nuvio aceita plugins — a versão da Play Store não aceita.
-> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis`, `visioncine`, `vaiquecol`, `zeusoficial`, `oxeanimes` e `brflix`.
+> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis`, `visioncine`, `vaiquecol`, `zeusoficial`, `oxeanimes`, `brflix` e `animesfhd`.
 
 </div>
 
 ---
 
-## Providers (51)
+## Providers (52)
 
 ### Filmes e séries
 
@@ -123,6 +123,7 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **AniTube** (`anitube`) — anime legendado/dublado, até 1080p (HLS). Precisa da chave do TMDB.
 - **DattebayoBR** (`dattebayobr`) — anime, tokusatsu, dorama e donghua, legendado/dublado, até 1080p (MP4). Precisa da chave do TMDB.
 - **OxeAnimes** (`oxeanimes`) — anime (séries e filmes), dublado e legendado (HLS, 720p). Precisa da chave do TMDB.
+- **AnimesFHD** (`animesfhd`) — anime (só séries), dublado e legendado (HLS, 720p). Precisa da chave do TMDB.
 
 ### Doramas e conteúdo asiático
 
