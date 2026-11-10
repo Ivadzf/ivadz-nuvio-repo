@@ -8,7 +8,7 @@
 
 [![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-**58 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (57 em português + 1 em inglês).
+**49 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (48 em português + 1 em inglês).
 
 **Deixe uma ⭐ se esse repo te ajudou**
 
@@ -68,7 +68,7 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 
 ---
 
-## Providers (58)
+## Providers (49)
 
 ### Filmes e séries
 
@@ -76,13 +76,10 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **MegaEmbed** (`megaembed`) — filmes e séries, 1080p/720p.
 - **Peachify** (`peachify`) — filmes e séries, 1080p.
 - **RedeFlix** (`redeflix`) — filmes e séries, 1080p.
-- **Pomfy** (`pomfy`) — filmes e séries, 1080p.
 - **MyEmbed** (`myembed`) — filmes e séries.
 - **CineAgora** (`cineagora`) — filmes e séries em HLS, dublado ou legendado. Precisa da chave do TMDB.
-- **NetCine** (`netcine`) — filmes, séries e anime em português.
 - **TopFilmes** (`topfilmes`) — só filmes, dublados.
 - **OverFlix** (`overflix`) — filmes e séries dublados.
-- **UltraCine** (`ultracine`) — filmes e séries dublados.
 - **PobreFlix** (`pobreflix`) — filmes e séries, dublado e legendado (via Streamtape). Precisa da chave do TMDB.
 - **PobreFlixTVFree** (`pobreflixtvfree`) — filmes e séries, dublado e legendado (HLS, 480p). Precisa da chave do TMDB.
 - **Kairou** (`kairou`) — filmes e séries, dublado e legendado, 1080p. Precisa da chave do TMDB.
@@ -105,9 +102,6 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 
 ### Anime
 
-- **My Wallpaper** (`mywallpaper`) — anime (séries).
-- **Berry Animes** (`berryanimes`) — anime (séries), até 1080p.
-- **AniStream** (`anistream`) — anime (séries e filmes), até 1080p.
 - **AniZone** (`anizone`) — anime (séries e filmes), até 1080p.
 - **AniZero** (`anizero`) — anime (séries e filmes), até 720p.
 - **TopAnimes** (`topanimes`) — anime (séries).
@@ -115,14 +109,11 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **AnimeFire** (`animefire`) — anime (séries e filmes).
 - **Animes Online Cloud** (`animesonlinecloud`) — anime (séries e filmes).
 - **Animes Online Blue** (`animesonlineblue`) — anime (séries), até 720p.
-- **YumeFree** (`yumefree`) — anime (séries e filmes).
 - **Otakulogia** (`otakulogia`) — anime (séries e filmes).
 - **AniBunker** (`anibunker`) — anime (séries e filmes).
 - **Animes HD** (`animeshd`) — anime (séries e filmes).
-- **Animes Drive** (`animesdrive`) — anime (séries e filmes).
 - **Animy** (`animy`) — anime (séries e filmes).
 - **Donghua no Sekai** (`donghuanosekai`) — donghua e anime (séries e filmes).
-- **Homura** (`homura`) — anime (séries e filmes), até 720p.
 - **Tomato** (`tomato`) — anime (séries), 480p/720p/1080p.
 - **AnimeZeY** (`animezey`) — filmes, séries e anime em português.
 - **AnimesCloud** (`animescloud`) — anime em português (dublado e legendado).

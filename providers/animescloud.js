@@ -1160,7 +1160,7 @@ function audioPt(t, porDefecto) {
 }
 
 const FUENTE = 'AnimesCloud';
-const BASE = 'https://animesdrive.online';
+const BASE = 'https://animesdrive.cloud';
 const UA_SITIO = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const ROMANOS = { ii: 2, iii: 3, iv: 4, v: 5, vi: 6 };
 const MARCAS = /\b(?:dublad[oa]s?|legendad[oa]s?|dub|leg|todos os episodios|online|completo|hd)\b/g;
@@ -1239,6 +1239,21 @@ function audioPagina(url, nombre) {
   return /dublado/i.test(url) || /\bdublad[oa]\b/.test(normalizar(nombre)) ? AUDIO_DUBLADO : AUDIO_LEGENDADO;
 }
 
+function palavrasExtras(nome, primarios) {
+  // Palavras do nome do candidato que não estão em nenhum título principal
+  // (ex.: "mugen ressha hen" em "kimetsu no yaiba mugen ressha hen").
+  // Páginas de arco/especial contêm o título base + extras e não devem
+  // empatar com a página do título base.
+  const palavras = String(nome || '').split(' ').filter(Boolean);
+  let menor = Infinity;
+  for (const p of primarios) {
+    const conjunto = new Set(limpio(p).split(' ').filter(Boolean));
+    const extras = palavras.filter((w) => !conjunto.has(w)).length;
+    if (extras < menor) menor = extras;
+  }
+  return menor === Infinity ? 0 : menor;
+}
+
 function evaluar(r, datos, tipo, temporada, nombres) {
   if (/\/episod(?:io|e)s?\//i.test(r.url)) return null;
   const filme = /\/filme\//i.test(r.url);
@@ -1246,14 +1261,17 @@ function evaluar(r, datos, tipo, temporada, nombres) {
   const nome = limpio(r.nombre);
   const exato = nombres.some((t) => limpio(t) === nome);
   const audio = audioPagina(r.url, r.nombre);
+  const penalidade = Math.min(0.3, palavrasExtras(nome, [datos.titulo, datos.original, datos.ingles]) * 0.1);
   if (tipo === 'movie') {
     let puntos = exato ? 1 : Math.max(0, ...nombres.map((t) => parecido(nome, limpio(t))));
     if (r.anio && datos.anio) puntos += r.anio === datos.anio ? 0.1 : Math.abs(Number(r.anio) - Number(datos.anio)) > 1 ? -0.3 : 0;
     if (filme) puntos += 0.1;
+    puntos -= penalidade;
     return puntos >= 0.8 ? { url: r.url, audio, puntos, propia: false } : null;
   }
   const suya = exato ? 0 : temporadaDe(nome);
-  const puntos = exato ? 1 : Math.max(0, ...nombres.map((t) => parecido(semTemporada(nome), semTemporada(limpio(t)))));
+  let puntos = exato ? 1 : Math.max(0, ...nombres.map((t) => parecido(semTemporada(nome), semTemporada(limpio(t)))));
+  puntos -= penalidade;
   if (puntos < 0.8) return null;
   if (temporada > 1 && suya === temporada) return { url: r.url, audio, puntos: puntos + 0.2, propia: true };
   if (suya <= 1) return { url: r.url, audio, puntos: puntos + (r.anio && r.anio === datos.anio ? 0.05 : 0), propia: false };
@@ -1277,18 +1295,21 @@ async function elegir(datos, tipo, temporada) {
 }
 
 function esFilme(url, html) {
-  return /\/filme\//i.test(url) || !/id=["']episodes["']/i.test(html);
+  return /\/filme\//i.test(url) || !/id=["']seasons["']/i.test(html);
 }
 
 function episodios(html) {
-  const inicio = html.search(/id=["']episodes["']/i);
+  // Novo tema: <div class="se-c"> por temporada, com .se-t (número) e
+  // .episode-card[data-episode-number] + <a href="/episodio/..."> por episódio.
   const lista = [];
-  if (inicio < 0) return lista;
-  for (const li of html.slice(inicio).split(/<li\b/i).slice(1)) {
-    const href = (li.match(/class=["'][^"']*\bepisodiotitle\b[^"']*["'][^>]*>[\s\S]*?<a[^>]+href=["']([^"']+)["']/i) || [])[1];
-    if (!href) continue;
-    const m = limpiarHtml((li.match(/class=["'][^"']*\bnumerando\b[^"']*["'][^>]*>([\s\S]*?)<\/div>/i) || [])[1]).match(/(\d+)\s*-\s*(\d+)/);
-    lista.push({ temporada: m ? Number(m[1]) : 1, episodio: m ? Number(m[2]) : 1, url: absoluta(href, BASE) });
+  for (const bloco of conClases(html, ['se-c'])) {
+    const temp = (bloco.match(/class=["'][^"']*\bse-t\b[^"']*["'][^>]*>\s*(\d{1,2})/i) || [])[1];
+    const temporada = temp ? Number(temp) : 1;
+    const patron = /data-episode-number=["'](\d+)["'][\s\S]{0,1200}?<a[^>]+href=["']([^"']+)["']/gi;
+    let m;
+    while ((m = patron.exec(bloco))) {
+      lista.push({ temporada, episodio: Number(m[1]), url: absoluta(m[2], BASE) });
+    }
   }
   return lista;
 }
@@ -1373,10 +1394,31 @@ async function itens(embed, op, audio, referer) {
 
 async function enlaces(url, html, audio) {
   const codigo = html || (await texto(url, { headers: cabeceras() }));
-  const listas = await Promise.all(opciones(codigo).map(async (op) => {
-    const embed = await embedDe(op, url);
-    return embed ? itens(embed, op, audio, url) : [];
-  }));
+  // Novo tema (episódios): player direto com <source src="...mp4"> (mangas.cloud).
+  // A página do episódio costuma trazer 2 fontes: legendada e dublada (/Dub/).
+  const diretas = [...(codigo.matchAll(/<source\b[^>]*\bsrc=["']([^"']+)["']/gi) || [])]
+    .map((m) => absoluta(m[1], url))
+    .filter((v) => /^https?:\/\//i.test(v));
+  if (diretas.length) {
+    return [...new Set(diretas)].map((v) => {
+      const audioFonte = /\/dub\//i.test(v) || /dublad/i.test(v) ? AUDIO_DUBLADO : audio;
+      const rotulo = audioFonte === AUDIO_DUBLADO ? 'Dublado' : 'Legendado';
+      return { url: v, audio: audioFonte, directo: true, servidor: `Direto ${rotulo}`, calidad: calidadDe(v, ''), headers: { Referer: url, 'User-Agent': UA_SITIO } };
+    });
+  }
+  // Filmes (e fallback): fluxo dooplayer antigo (wp-json/admin-ajax + vidstack).
+  // Os embeds vidstack são lentos (buscam o player JS) e o motor corta em 50s
+  // (CIERRE); por isso os embeds diretos (jwplayer ?source=...mp4) são
+  // resolvidos primeiro e retornados sem esperar os demais.
+  const ops = opciones(codigo);
+  const embeds = await Promise.all(ops.map(async (op) => ({ op, embed: await embedDe(op, url).catch(() => '') })));
+  const comEmbed = embeds.filter((x) => x.embed);
+  const diretos = [];
+  for (const { op, embed } of comEmbed) {
+    if (/source=/.test(embed) && /\.mp4|\.m3u8/.test(embed)) diretos.push(...(await itens(embed, op, audio, url)));
+  }
+  if (diretos.length) return diretos;
+  const listas = await Promise.all(comEmbed.map(({ op, embed }) => itens(embed, op, audio, url)));
   return [].concat(...listas);
 }
 

@@ -1,6 +1,6 @@
 {
  "name": "Ivadz Nuvio Repo",
- "version": "2.11.3",
+ "version": "2.11.4",
  "scrapers": [
   {
    "id": "fshd",
@@ -105,60 +105,6 @@
    ]
   },
   {
-   "id": "pomfy",
-   "name": "Pomfy",
-   "description": "Filmes e séries em 1080p via Pomfy API",
-   "version": "1.0.0",
-   "author": "lawlietbr, saimuelbr",
-   "supportedTypes": [
-    "tv",
-    "movie"
-   ],
-   "filename": "providers/pomfy.js",
-   "enabled": true,
-   "logo": "https://pomfy.online/pomfylogofullcolor.png",
-   "contentLanguage": [
-    "pt-br"
-   ],
-   "formats": [
-    "hls",
-    "m3u8"
-   ],
-   "limited": false,
-   "disabledPlatforms": [],
-   "supportsExternalPlayer": true,
-   "tags": [
-    "filmes",
-    "séries"
-   ]
-  },
-  {
-   "id": "mywallpaper",
-   "name": "My Wallpaper",
-   "description": "CDN brasileiro de animes",
-   "version": "2.0.0",
-   "author": "lawlietbr",
-   "supportedTypes": [
-    "tv"
-   ],
-   "filename": "providers/mywallpaper.js",
-   "enabled": true,
-   "logo": "https://image2url.com/r2/default/images/1773218651086-4a0ea24e-6e2b-4a22-ab18-8cb28d1b6f23.png",
-   "contentLanguage": [
-    "pt-br"
-   ],
-   "formats": [
-    "hls",
-    "m3u8"
-   ],
-   "limited": false,
-   "disabledPlatforms": [],
-   "supportsExternalPlayer": true,
-   "tags": [
-    "anime"
-   ]
-  },
-  {
    "id": "doramogo",
    "name": "Doramogo",
    "description": "Diversidade de conteúdos em 1080p",
@@ -217,49 +163,6 @@
     "player",
     "embed"
    ]
-  },
-  {
-   "id": "berryanimes",
-   "name": "Berry Animes",
-   "description": "Anime (séries) • Qualidade encontrada: até 1080p • Áudio: multiáudio, conforme o episódio.",
-   "version": "0.1.6",
-   "filename": "providers/berryanimes.js",
-   "supportedTypes": [
-    "tv"
-   ],
-   "enabled": true,
-   "contentLanguage": [
-    "pt-BR",
-    "ja",
-    "en"
-   ],
-   "formats": [
-    "hls"
-   ],
-   "hasSettings": true,
-   "supportsExternalPlayer": false
-  },
-  {
-   "id": "anistream",
-   "name": "AniStream",
-   "description": "Anime (séries e filmes) • Qualidade encontrada: até 1080p • Áudio: múltiplas faixas, conforme o arquivo.",
-   "version": "0.1.6",
-   "filename": "providers/anistream.js",
-   "supportedTypes": [
-    "movie",
-    "tv"
-   ],
-   "enabled": true,
-   "contentLanguage": [
-    "pt-BR",
-    "ja"
-   ],
-   "formats": [
-    "mkv",
-    "mp4"
-   ],
-   "hasSettings": true,
-   "supportsExternalPlayer": false
   },
   {
    "id": "megaembedapi",
@@ -478,28 +381,6 @@
    "supportsExternalPlayer": true
   },
   {
-   "id": "yumefree",
-   "name": "YumeFree",
-   "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
-   "version": "0.1.0",
-   "filename": "providers/yumefree.js",
-   "supportedTypes": [
-    "movie",
-    "tv"
-   ],
-   "enabled": true,
-   "contentLanguage": [
-    "pt-BR",
-    "ja"
-   ],
-   "formats": [
-    "hls",
-    "mp4"
-   ],
-   "hasSettings": true,
-   "supportsExternalPlayer": true
-  },
-  {
    "id": "otakulogia",
    "name": "Otakulogia",
    "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
@@ -565,28 +446,6 @@
    "supportsExternalPlayer": true
   },
   {
-   "id": "animesdrive",
-   "name": "Animes Drive",
-   "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado.",
-   "version": "0.1.3",
-   "filename": "providers/animesdrive.js",
-   "supportedTypes": [
-    "movie",
-    "tv"
-   ],
-   "enabled": true,
-   "contentLanguage": [
-    "pt-BR",
-    "ja"
-   ],
-   "formats": [
-    "mp4",
-    "hls"
-   ],
-   "hasSettings": true,
-   "supportsExternalPlayer": true
-  },
-  {
    "id": "animy",
    "name": "Animy",
    "description": "Anime (séries e filmes) • Qualidade encontrada: variável • Áudio: dublado ou legendado, conforme o arquivo.",
@@ -633,29 +492,6 @@
    "supportsExternalPlayer": true
   },
   {
-   "id": "homura",
-   "name": "Homura",
-   "description": "Anime (séries e filmes) • Qualidade encontrada: até 720p • Áudio: dublado ou legendado, conforme a versão.",
-   "version": "0.1.0",
-   "filename": "providers/homura.js",
-   "supportedTypes": [
-    "movie",
-    "tv"
-   ],
-   "enabled": true,
-   "contentLanguage": [
-    "pt-BR",
-    "ja"
-   ],
-   "formats": [
-    "mp4",
-    "hls",
-    "dash"
-   ],
-   "hasSettings": true,
-   "supportsExternalPlayer": true
-  },
-  {
    "id": "tomato",
    "name": "Tomato",
    "description": "Anime (séries) • Qualidades encontradas: 480p, 720p e 1080p • Áudio: dublado e legendado, conforme a temporada.",
@@ -695,27 +531,6 @@
     "m3u8"
    ],
    "logo": "https://i.postimg.cc/RVTy2djk/ainimezey.png",
-   "contentLanguage": [
-    "pt"
-   ]
-  },
-  {
-   "id": "netcine",
-   "name": "NetCine",
-   "description": "Películas, series y anime en portugués de Brasil (doblado y subtitulado) desde NetCine.",
-   "version": "1.0.0",
-   "author": "saimuelbr",
-   "supportedTypes": [
-    "movie",
-    "tv"
-   ],
-   "filename": "providers/netcine.js",
-   "enabled": true,
-   "formats": [
-    "mp4",
-    "m3u8"
-   ],
-   "logo": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
    "contentLanguage": [
     "pt"
    ]
@@ -776,27 +591,6 @@
     "m3u8"
    ],
    "logo": "https://overflix.me/assets/img/android-chrome-192x192.png",
-   "contentLanguage": [
-    "pt"
-   ]
-  },
-  {
-   "id": "ultracine",
-   "name": "UltraCine",
-   "description": "Películas y series dobladas al portugués de Brasil desde UltraCine.",
-   "version": "1.0.0",
-   "author": "saimuelbr",
-   "supportedTypes": [
-    "movie",
-    "tv"
-   ],
-   "filename": "providers/ultracine.js",
-   "enabled": true,
-   "formats": [
-    "mp4",
-    "m3u8"
-   ],
-   "logo": "https://ultracine.org/wp-content/uploads/2024/07/cropped-favicon-300x300.png",
    "contentLanguage": [
     "pt"
    ]
