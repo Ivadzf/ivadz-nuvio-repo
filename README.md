@@ -8,7 +8,7 @@
 
 [![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-**52 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (51 em português + 1 em inglês).
+**53 providers** — filmes, séries, animes, doramas e tokusatsu, com áudio dublado e legendado (52 em português + 1 em inglês).
 
 **Deixe uma ⭐ se esse repo te ajudou**
 
@@ -68,7 +68,7 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 
 ---
 
-## Providers (52)
+## Providers (53)
 
 ### Filmes e séries
 
@@ -129,6 +129,7 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 
 - **Doramogo** (`doramogo`) — filmes e séries, 1080p.
 - **Doramas Online** (`doramasonline`) — doramas com legendas em português.
+- **SeuDorama** (`seudorama`) — doramas legendados (MP4, 720p/360p). Não precisa da chave do TMDB.
 - **AmyFlix** (`amyflix`) — séries e filmes asiáticos, incluindo GL.
 
 ## O que ficou de fora — e por quê
