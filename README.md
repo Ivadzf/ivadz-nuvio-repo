@@ -136,7 +136,6 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **Francês:** 37 providers só em francês e 10 que misturam francês e português não entraram — o repo é só em português (exceto o frameXTV, em inglês).
 - **Duplicados:** alguns providers apareciam em mais de um repo base; ficou uma versão de cada.
 - **meuvod:** excluído de propósito — o arquivo original traz embutidas as credenciais de servidores Xtream da autora. Incluir o arquivo publicaria as contas dela.
-- **animesfhd e anitube (Kamirama):** existem como arquivos, mas o autor não os registrou no `manifest.json` dele, então não foram incluídos.
 
 ## Status
 
