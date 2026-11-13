@@ -8,7 +8,7 @@
 
 [![Licença GPL-3.0](https://img.shields.io/badge/📄_Licença-GPL--3.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-**55 providers** — filmes, séries, animes, doramas, novelas e tokusatsu, com áudio dublado e legendado (54 em português + 1 em inglês).
+**47 providers** — filmes, séries, animes, doramas, novelas e tokusatsu, com áudio dublado e legendado (46 em português + 1 em inglês).
 
 **Deixe uma ⭐ se esse repo te ajudou**
 
@@ -62,13 +62,13 @@ https://raw.githubusercontent.com/Ivadzf/ivadz-nuvio-repo/main/manifest.json
 No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atualize e ative os providers que quiser usar.
 
 > **Requisitos:** só a versão sideloaded do Nuvio aceita plugins — a versão da Play Store não aceita.
-> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `bscine`, `popplay`, `fenixflix`, `zeus`, `brazucaplay`, `cinegratis`, `visioncine`, `vaiquecol`, `zeusoficial`, `oxeanimes`, `brflix`, `animesfhd`, `noveflix` e `cplayapp`.
+> Vários providers precisam da chave do TMDB para buscar o título. Configure em **Settings > Integrations > TMDB Enrichment**. Sem ela, esses providers não retornam nada. Quem precisa: `cineagora`, `goyabu`, `anitube`, `dattebayobr`, `pobreflix`, `pobreflixtvfree`, `kairou`, `primeflix`, `cinegratis`, `visioncine`, `vaiquecol`, `oxeanimes`, `brflix`, `animesfhd`, `noveflix` e `cplayapp`.
 
 </div>
 
 ---
 
-## Providers (55)
+## Providers (47)
 
 ### Filmes e séries
 
@@ -85,17 +85,9 @@ No Nuvio, vá em **Settings > Plugins > Add Repository**, cole a URL, salve, atu
 - **Kairou** (`kairou`) — filmes e séries, dublado e legendado, 1080p. Precisa da chave do TMDB.
 - **PrimeFlix** (`primeflix`) — filmes e séries, dublado e legendado (HLS, até 1080p). Precisa da chave do TMDB.
 - **VenoPlay** (`venoplay`) — filmes e séries, só dublado (HLS, 480p). Não precisa da chave do TMDB. Nem todo título tem fonte direta — nesses casos ele não retorna nada.
-- **WatchPlay** (`watchplay`) — filmes e séries, só dublado (HLS). Não precisa da chave do TMDB.
-- **BsCine** (`bscine`) — filmes e séries, só dublado (MP4, 1080p). Precisa da chave do TMDB.
-- **PopPlay** (`popplay`) — filmes e séries, só dublado (MP4). Precisa da chave do TMDB. Nem todo título está no catálogo — nesses casos ele não retorna nada.
-- **FenixFlix** (`fenixflix`) — filmes e séries, dublado e legendado (MP4, 1080p). Precisa da chave do TMDB.
-- **Zeus** (`zeus`) — filmes e séries, só dublado (MP4). Precisa da chave do TMDB.
-- **Brazuca Play** (`brazucaplay`) — filmes e séries, só dublado (HLS, direto via CDN). Precisa da chave do TMDB.
-- **Veyra** (`veyra`) — filmes e séries, só dublado (MP4, direto via NixPlay). Não precisa da chave do TMDB.
 - **CineGratis** (`cinegratis`) — filmes e séries, só dublado (HLS, via brstream). Precisa da chave do TMDB.
 - **VisionCine** (`visioncine`) — filmes e séries, só dublado (HLS, via brstream). Precisa da chave do TMDB.
 - **VaiQueCol** (`vaiquecol`) — filmes e séries, só dublado (HLS, 480p, via PlenoFlu). Precisa da chave do TMDB (só para filmes).
-- **Zeus Oficial** (`zeusoficial`) — filmes e séries, dublado e legendado (MP4/HLS, até 4K). Precisa da chave do TMDB.
 - **BRFlix** (`brflix`) — filmes e séries, dublado e legendado (MP4/HLS, até 4K). Precisa da chave do TMDB.
 - **EmbedMovies** (`embedmovies`) — filmes e séries, incluindo anime.
 - **MegaEmbedAPI** (`megaembedapi`) — só filmes, dublado, 360p/720p.
